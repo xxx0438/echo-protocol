@@ -6,20 +6,17 @@
     
     <title>Echo Protocol | The Computational Liquidity Layer</title>
     <meta name="description" content="Echo turns high-value scientific algorithms into verifiable APIs that AI Agents can buy and use instantly.">
-
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
 
     <meta property="og:title" content="Echo Protocol | AI Agent 的计算流动性层">
     <meta property="og:description" content="将沉默在 GitHub 与 arXiv 中的有效工程算法转化为可验证的 API。我们交易的是“可验证的计算结果”。">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://images.unsplash.com/photo-1639762681485-...">
     <meta property="og:image" content="https://raw.githubusercontent.com/你的用户名/echo-protocol/main/og-image.jpg"> 
     <meta name="twitter:card" content="summary_large_image">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /* 语言切换的核心 CSS 逻辑 */
         .en-content { display: none; }
         span.en-content { display: none; }
         body.lang-en .zh-content { display: none; }
@@ -28,14 +25,12 @@
         body.lang-en span.en-content { display: inline; }
         body.lang-en flex.en-content { display: flex; }
 
-        /* 4. 滚动动画的初始状态：透明且往下偏移 30px */
         .fade-in {
             opacity: 0;
             transform: translateY(30px);
             transition: opacity 0.8s ease-out, transform 0.8s ease-out;
             will-change: opacity, transform;
         }
-        /* 滚动动画的触发状态：完全不透明且回到原位 */
         .fade-in.visible {
             opacity: 1;
             transform: translateY(0);
@@ -135,41 +130,45 @@
                 <span class="zh-content">通过零知识性能证明（ZK-POP），我们用纯粹的数学填补信任鸿沟。</span>
                 <span class="en-content">We use pure math to bridge the trust gap via Zero-Knowledge Performance Proofs (ZK-POP).</span>
             </p>
+
+            <div class="max-w-5xl mx-auto mb-16 bg-white p-4 md:p-8 rounded-2xl shadow-2xl transform transition hover:scale-[1.01] duration-300">
+                <img src="workflow.jpg" alt="Echo Protocol System Workflow" class="w-full h-auto rounded-lg">
+            </div>
             
             <div class="grid md:grid-cols-3 gap-8 text-center relative">
                 <div class="hidden md:block absolute top-1/2 left-1/6 right-1/6 h-0.5 bg-gray-700 -z-10 transform -translate-y-1/2"></div>
                 
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700">
+                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
                     <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(59,130,246,0.5)]">1</div>
                     <h3 class="text-xl font-bold mb-3">
                         <span class="zh-content">输入 (Input)</span>
                         <span class="en-content">Input</span>
                     </h3>
                     <p class="text-gray-400 text-sm">
-                        <span class="zh-content">Agent 发送原始数据请求给 API。</span>
-                        <span class="en-content">The Agent sends raw data.</span>
+                        <span class="zh-content">Agent 发现缺失技能，发送原始数据请求给 API。</span>
+                        <span class="en-content">Agent detects missing skill and sends raw data request.</span>
                     </p>
                 </div>
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700">
+                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
                     <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(99,102,241,0.5)]">2</div>
                     <h3 class="text-xl font-bold mb-3">
                         <span class="zh-content">处理 (Process)</span>
                         <span class="en-content">Process</span>
                     </h3>
                     <p class="text-gray-400 text-sm">
-                        <span class="zh-content">Echo 在隔离且加密的环境中运行算法。</span>
-                        <span class="en-content">Echo runs the algorithm in an isolated, encrypted environment.</span>
+                        <span class="zh-content">调用长尾算法并在隔离加密环境中执行。</span>
+                        <span class="en-content">Calls long-tail algorithm & executes in isolated environment.</span>
                     </p>
                 </div>
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700">
+                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
                     <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(168,85,247,0.5)]">3</div>
                     <h3 class="text-xl font-bold mb-3">
-                        <span class="zh-content">输出 (Output)</span>
-                        <span class="en-content">Output</span>
+                        <span class="zh-content">结算 (Settlement)</span>
+                        <span class="en-content">Settlement</span>
                     </h3>
                     <p class="text-gray-400 text-sm">
-                        <span class="zh-content">Agent 接收计算结果以及数学 ZK 证明。</span>
-                        <span class="en-content">The Agent receives the result + a ZK Proof.</span>
+                        <span class="zh-content">验证 ZK 证明，执行智能合约，97.5% 收益分给开发者。</span>
+                        <span class="en-content">Verifies ZKP, executes smart contract, 97.5% to developer.</span>
                     </p>
                 </div>
             </div>
@@ -218,7 +217,6 @@
     </footer>
 
     <script>
-        // 1. 语言切换逻辑
         function toggleLanguage() {
             const body = document.body;
             const btn = document.getElementById('lang-toggle');
@@ -231,9 +229,7 @@
             }
         }
 
-        // 2. 滚动动画逻辑 (Intersection Observer)
         document.addEventListener("DOMContentLoaded", function() {
-            // 设置观察器：当元素有 15% 进入视口时触发
             const observerOptions = {
                 threshold: 0.15,
                 rootMargin: "0px 0px -50px 0px"
@@ -242,15 +238,12 @@
             const observer = new IntersectionObserver(function(entries, observer) {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // 当元素进入视口，添加 'visible' 类触发 CSS 动画
                         entry.target.classList.add('visible');
-                        // 可选：触发一次后停止观察该元素，让其保持显示状态
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // 抓取页面上所有带有 'fade-in' 类的元素进行观察
             const elementsToFadeIn = document.querySelectorAll('.fade-in');
             elementsToFadeIn.forEach(el => {
                 observer.observe(el);
