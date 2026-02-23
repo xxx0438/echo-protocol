@@ -15,45 +15,81 @@
             animation: blink 1s step-end infinite;
         }
         @keyframes blink { 50% { opacity: 0; } }
+
+        /* 双语切换核心逻辑 */
+        .en-content { display: none; }
+        span.en-content { display: none; }
+        body.lang-en .zh-content { display: none; }
+        body.lang-en span.zh-content { display: none; }
+        body.lang-en .en-content { display: block; }
+        body.lang-en span.en-content { display: inline; }
+        body.lang-en flex.en-content { display: flex; }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-300 font-sans h-screen flex overflow-hidden">
+<body class="bg-gray-950 text-gray-300 font-sans h-screen flex overflow-hidden transition-colors duration-300">
 
     <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
         <div class="p-6 border-b border-gray-800">
             <h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO<span class="text-gray-100">APP</span></h1>
-            <p class="text-xs text-gray-500 mt-1">计算流动性层 v0.1</p>
+            <p class="text-xs text-gray-500 mt-1">
+                <span class="zh-content">企业级可验证计算层 v0.1</span>
+                <span class="en-content">Enterprise Verifiable Compute v0.1</span>
+            </p>
         </div>
         <nav class="flex-1 p-4 space-y-2">
             <a href="#" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                模型 API 市场
+                <span class="zh-content">模型 API 市场</span>
+                <span class="en-content">Model API Market</span>
             </a>
             <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-gray-200 rounded-lg transition-colors">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                开发者上传 (ZK 容器)
+                <span class="zh-content">开发者上传 (ZK 容器)</span>
+                <span class="en-content">Dev Upload (ZK Container)</span>
             </a>
             <a href="#" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 hover:text-gray-200 rounded-lg transition-colors">
                 <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                乐观验证 / 节点状态
+                <span class="zh-content">智能合约账单与核算</span>
+                <span class="en-content">Smart Contract Billing</span>
             </a>
         </nav>
+        
         <div class="p-6 border-t border-gray-800">
-            <div class="flex items-center">
-                <div class="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500"></div>
+            <div class="flex items-center mb-2">
+                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-bold text-xs">Org</div>
                 <div class="ml-3">
-                    <p class="text-sm text-white">0x7F...4A92</p>
-                    <p class="text-xs text-green-400">● 已连接</p>
+                    <p class="text-sm text-white font-medium">QuantFund Alpha</p>
+                    <p class="text-xs text-green-400">
+                        <span class="zh-content">● Stripe 已绑定</span>
+                        <span class="en-content">● Stripe Connected</span>
+                    </p>
                 </div>
+            </div>
+            <div class="text-[10px] text-gray-500 font-mono bg-gray-950 p-2 rounded mt-2 border border-gray-800">
+                <span class="zh-content">链上结算地址:</span>
+                <span class="en-content">Settlement Addr:</span><br>0x7F2a...4A92
             </div>
         </div>
     </aside>
 
     <main class="flex-1 flex flex-col overflow-hidden bg-gray-950">
         <header class="h-16 border-b border-gray-800 flex items-center px-6 justify-between bg-gray-900/50">
-            <h2 class="text-lg font-semibold text-gray-200">调用测试区 (Playground)</h2>
-            <div class="flex space-x-4">
-                <span class="px-3 py-1 bg-gray-800 text-xs text-gray-400 rounded-full border border-gray-700">API 余额: 1,500 ECHO</span>
+            <h2 class="text-lg font-semibold text-gray-200">
+                <span class="zh-content">调用测试区 (Playground)</span>
+                <span class="en-content">Playground (API Test)</span>
+            </h2>
+            <div class="flex items-center space-x-4">
+                <span class="px-4 py-1.5 bg-gray-800 text-sm text-green-400 font-mono rounded-full border border-green-900/50">
+                    <span class="zh-content">预付余额: $1,500.00</span>
+                    <span class="en-content">Balance: $1,500.00</span>
+                </span>
+                <a href="index.html" class="text-gray-400 hover:text-white text-sm">
+                    <span class="zh-content">&larr; 返回官网</span>
+                    <span class="en-content">&larr; Home</span>
+                </a>
+                <button id="lang-toggle" onclick="toggleLanguage()" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white rounded font-bold transition-all">
+                    EN
+                </button>
             </div>
         </header>
 
@@ -62,45 +98,79 @@
             <div class="w-full lg:w-1/3 flex flex-col gap-6">
                 <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-green-900/40 text-green-400 text-[10px] font-bold px-2 py-1 rounded-bl-lg border-b border-l border-green-800/50">
-                        ZK-POP 认证通过
+                        <span class="zh-content">ZK-POP 认证通过</span>
+                        <span class="en-content">ZK-POP Certified</span>
                     </div>
                     <div class="w-12 h-12 bg-gray-800 rounded-lg flex items-center justify-center mb-4 border border-gray-700">
                         📈
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">高频统计套利模型</h3>
-                    <p class="text-sm text-gray-400 mb-4">基于深度学习与协整关系的跨品种套利算法。支持加密货币分钟级别高频调度。</p>
+                    <h3 class="text-xl font-bold text-white mb-2">
+                        <span class="zh-content">高频统计套利模型</span>
+                        <span class="en-content">High-Freq Stat Arb Model</span>
+                    </h3>
+                    <p class="text-sm text-gray-400 mb-4">
+                        <span class="zh-content">基于深度学习与协整关系的跨品种套利算法。支持加密货币分钟级别高频调度。</span>
+                        <span class="en-content">Cross-asset statistical arbitrage algorithm based on deep learning and cointegration. Supports minute-level frequency.</span>
+                    </p>
                     
-                    <div class="bg-gray-950 rounded-lg p-3 text-sm font-mono border border-gray-800 space-y-1">
-                        <div class="flex justify-between"><span class="text-gray-500">Sharpe Ratio (ZK验证):</span> <span class="text-green-400">2.84</span></div>
-                        <div class="flex justify-between"><span class="text-gray-500">执行环境:</span> <span class="text-blue-400">AWS Nitro TEE</span></div>
-                        <div class="flex justify-between"><span class="text-gray-500">单次调用费用:</span> <span class="text-yellow-500">0.5 ECHO</span></div>
+                    <div class="bg-gray-950 rounded-lg p-3 text-sm font-mono border border-gray-800 space-y-2">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">
+                                <span class="zh-content">Sharpe Ratio (ZK验证):</span>
+                                <span class="en-content">Sharpe Ratio (ZK Verified):</span>
+                            </span> 
+                            <span class="text-green-400">2.84</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">
+                                <span class="zh-content">执行环境:</span>
+                                <span class="en-content">Execution Env:</span>
+                            </span> 
+                            <span class="text-blue-400">AWS Nitro TEE</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t border-gray-800 pt-2 mt-2">
+                            <span class="text-gray-500">
+                                <span class="zh-content">单次调用费用:</span>
+                                <span class="en-content">Cost Per Call:</span>
+                            </span> 
+                            <span class="text-yellow-500 font-bold">$0.50</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg flex-1">
-                    <h4 class="text-md font-bold text-gray-200 mb-4 border-b border-gray-800 pb-2">请求参数 (Agent Input)</h4>
+                    <h4 class="text-md font-bold text-gray-200 mb-4 border-b border-gray-800 pb-2">
+                        <span class="zh-content">请求参数 (Agent Input)</span>
+                        <span class="en-content">Request Params (Agent Input)</span>
+                    </h4>
                     <div class="space-y-4">
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1">交易对 (Symbol)</label>
-                            <input type="text" value="BTC/USDT, ETH/USDT" class="w-full bg-gray-950 border border-gray-800 rounded-md p-2 text-sm text-gray-300 focus:outline-none focus:border-blue-500">
+                            <label class="block text-xs text-gray-500 mb-1">
+                                <span class="zh-content">交易对 (Symbol)</span>
+                                <span class="en-content">Trading Pair (Symbol)</span>
+                            </label>
+                            <input type="text" id="symbolInput" value="BTC/USDT, ETH/USDT" class="w-full bg-gray-950 border border-gray-800 rounded-md p-2 text-sm text-gray-300 focus:outline-none focus:border-blue-500">
                         </div>
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1">K线周期 (Timeframe)</label>
+                            <label class="block text-xs text-gray-500 mb-1">
+                                <span class="zh-content">K线周期 (Timeframe)</span>
+                                <span class="en-content">Timeframe</span>
+                            </label>
                             <select class="w-full bg-gray-950 border border-gray-800 rounded-md p-2 text-sm text-gray-300 focus:outline-none focus:border-blue-500">
-                                <option>1m (1分钟)</option>
-                                <option>5m (5分钟)</option>
-                                <option>1h (1小时)</option>
+                                <option class="zh-content">1m (1分钟)</option>
+                                <option class="en-content">1m (1 Minute)</option>
+                                <option class="zh-content">5m (5分钟)</option>
+                                <option class="en-content">5m (5 Minutes)</option>
                             </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1">原始数据注入 (Raw Data Hash) 选填</label>
-                            <input type="text" placeholder="0x..." class="w-full bg-gray-950 border border-gray-800 rounded-md p-2 text-sm text-gray-300 focus:outline-none focus:border-blue-500">
                         </div>
                     </div>
 
                     <button id="runBtn" class="w-full mt-6 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-4 rounded-lg transition-colors flex justify-center items-center shadow-[0_0_15px_rgba(37,99,235,0.4)]">
                         <svg id="loadingIcon" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                        <span id="btnText">在 TEE 环境中执行调用</span>
+                        <span id="btnText">
+                            <span class="zh-content">在 TEE 环境中执行调用 ($0.50)</span>
+                            <span class="en-content">Execute in TEE ($0.50)</span>
+                        </span>
                     </button>
                 </div>
             </div>
@@ -116,7 +186,11 @@
                 </div>
                 
                 <div id="terminal" class="flex-1 p-4 font-mono text-sm text-gray-400 overflow-y-auto terminal-scroll bg-[#0D1117]">
-                    <div><span class="text-blue-400">echo@network</span>:<span class="text-gray-200">~</span>$ waiting for agent request...</div>
+                    <div>
+                        <span class="text-blue-400">echo@network</span>:<span class="text-gray-200">~</span>$ 
+                        <span class="zh-content text-gray-500">等待 Agent 请求...</span>
+                        <span class="en-content text-gray-500">waiting for agent request...</span>
+                    </div>
                     <div class="blinking-cursor mt-1"></div>
                 </div>
             </div>
@@ -125,70 +199,83 @@
     </main>
 
     <script>
+        // --- 双语切换逻辑 ---
+        function toggleLanguage() {
+            const body = document.body;
+            const btn = document.getElementById('lang-toggle');
+            if (body.classList.contains('lang-en')) {
+                body.classList.remove('lang-en');
+                btn.innerText = 'EN'; 
+            } else {
+                body.classList.add('lang-en');
+                btn.innerText = '中文'; 
+            }
+        }
+
+        // --- 模拟 API 调用与终端逻辑 ---
         document.getElementById('runBtn').addEventListener('click', async function() {
             const btn = this;
             const btnText = document.getElementById('btnText');
             const loadingIcon = document.getElementById('loadingIcon');
             const terminal = document.getElementById('terminal');
+            const symbolData = document.getElementById('symbolInput').value; 
             
-            // 防止重复点击
             if (btn.disabled) return;
             
-            // 按钮状态更新
+            // 改变按钮状态（使用双语代码）
             btn.disabled = true;
             btn.classList.replace('bg-blue-600', 'bg-blue-800');
             btn.classList.remove('hover:bg-blue-500');
-            btnText.innerText = "处理中...";
+            btnText.innerHTML = '<span class="zh-content">处理中...</span><span class="en-content">Processing...</span>';
             loadingIcon.classList.remove('hidden');
 
-            // 清理旧日志并移除光标
             terminal.innerHTML = '';
 
-            // 辅助函数：模拟在控制台逐行打印日志
             const printLog = async (html, delay = 800) => {
                 return new Promise(resolve => {
                     setTimeout(() => {
                         const div = document.createElement('div');
                         div.innerHTML = html;
                         terminal.appendChild(div);
-                        terminal.scrollTop = terminal.scrollHeight; // 自动滚动到底部
+                        terminal.scrollTop = terminal.scrollHeight;
                         resolve();
                     }, delay);
                 });
             };
 
             try {
-                // 第一步：初始化与权限验证
-                await printLog('<span class="text-blue-400">echo@network</span>:~$ > echo-cli invoke --model quant_arb_042', 200);
-                await printLog('<span class="text-gray-500">[System] Initiating connection to Echo Gateway...</span>', 500);
-                await printLog('<span class="text-green-400">✔ API Key Validated. Deducting 0.5 ECHO...</span>', 600);
+                // Phase 0
+                await printLog('<span class="text-blue-400">echo@network</span>:~$ > echo-cli invoke --model quant_arb_042 --data "' + symbolData + '"', 200);
+                await printLog('<span class="text-gray-500"><span class="zh-content">[系统] 正在初始化与 Echo 网关的连接...</span><span class="en-content">[System] Initiating connection to Echo Gateway...</span></span>', 500);
+                await printLog('<span class="text-green-400"><span class="zh-content">✔ 企业 API 密钥已验证。从法币余额中扣除 $0.50...</span><span class="en-content">✔ Enterprise API Key Validated. Deducting $0.50 from fiat balance...</span></span>', 600);
 
-                // 根据你的文档：Phase 1 ZK-POP 检查
-                await printLog('<br><span class="text-yellow-400">==== [PHASE 1] ZK-POP 历史记录校验 ====</span>', 400);
-                await printLog('Fetching model ZK-POP certificate from on-chain registry...', 800);
-                await printLog('<span class="text-green-400">✔ Proof verified. Model "quant_arb_042" guaranteed Sharpe Ratio > 2.5.</span>', 1000);
+                // Phase 1
+                await printLog('<br><span class="text-yellow-400"><span class="zh-content">==== [PHASE 1] ZK-POP 历史表现校验 ====</span><span class="en-content">==== [PHASE 1] ZK-POP Historical Validation ====</span></span>', 400);
+                await printLog('<span class="zh-content">正从链上注册表拉取模型 ZK-POP 证书...</span><span class="en-content">Fetching model ZK-POP certificate from on-chain registry...</span>', 800);
+                await printLog('<span class="text-green-400"><span class="zh-content">✔ 零知识证明已验证。模型 "quant_arb_042" 性能达标 (Sharpe > 2.5)。</span><span class="en-content">✔ Proof verified. Model "quant_arb_042" guaranteed Sharpe Ratio > 2.5.</span></span>', 1000);
                 
-                // 根据你的文档：Phase 2 TEE 极速执行
-                await printLog('<br><span class="text-purple-400">==== [PHASE 2] TEE (可信执行环境) 加载 ====</span>', 600);
-                await printLog('Allocating AWS Nitro Enclave...', 500);
-                await printLog('Injecting model weights (Encrypted)...', 600);
-                await printLog('Injecting user input data (Encrypted)...', 600);
-                await printLog('<span class="text-blue-300">⚙️ Running PyTorch inference inside TEE...</span>', 1500);
-                await printLog('<span class="text-green-400">✔ Inference complete. Latency: 42ms.</span>', 500);
+                // Phase 2
+                await printLog('<br><span class="text-purple-400"><span class="zh-content">==== [PHASE 2] TEE (可信执行环境) 极速加载 ====</span><span class="en-content">==== [PHASE 2] TEE Secure Execution ====</span></span>', 600);
+                await printLog('<span class="zh-content">正在分配 AWS Nitro Enclave 硬件飞地...</span><span class="en-content">Allocating AWS Nitro Enclave...</span>', 500);
+                await printLog('<span class="zh-content">注入模型权重 (端到端加密)...</span><span class="en-content">Injecting model weights (Encrypted)...</span>', 600);
+                await printLog('<span class="zh-content">注入用户输入数据 (端到端加密)...</span><span class="en-content">Injecting user input data (Encrypted)...</span>', 600);
+                await printLog('<span class="text-blue-300"><span class="zh-content">⚙️ 正在 TEE 内部运行 PyTorch 推理...</span><span class="en-content">⚙️ Running PyTorch inference inside TEE...</span></span>', 1500);
+                await printLog('<span class="text-green-400"><span class="zh-content">✔ 推理完成。计算延迟: 42ms。</span><span class="en-content">✔ Inference complete. Latency: 42ms.</span></span>', 500);
 
-                // 根据你的文档：Phase 3 Settlement 阶段性上链
-                await printLog('<br><span class="text-blue-400">==== [PHASE 3] Optimistic Settlement ====</span>', 400);
-                await printLog('Generating Execution Hash for Staged ZK Audit...', 600);
-                await printLog('<span class="text-gray-500">Tx Hash: 0x9f8c1a...e7b2 queued for rollup validation.</span>', 500);
+                // Phase 3
+                await printLog('<br><span class="text-blue-400"><span class="zh-content">==== [PHASE 3] 链上结算与智能合约审计 ====</span><span class="en-content">==== [PHASE 3] On-chain Settlement & Audit ====</span></span>', 400);
+                await printLog('<span class="zh-content">生成执行哈希，用于后置阶段性 ZK 抽查...</span><span class="en-content">Generating Execution Hash for Staged ZK Audit...</span>', 600);
+                await printLog('<span class="text-gray-500"><span class="zh-content">触发分润智能合约: 路由 $0.4875 至开发者钱包, $0.0125 至 Echo 国库。</span><span class="en-content">Triggering Smart Contract: Routing $0.4875 to Developer, $0.0125 to Echo.</span></span>', 600);
+                await printLog('<span class="text-gray-500"><span class="zh-content">链上 Tx Hash: 0x9f8c1a...e7b2 已排队等待 Rollup。</span><span class="en-content">Tx Hash: 0x9f8c1a...e7b2 queued for rollup validation.</span></span>', 500);
 
-                // 最终输出结果给 Agent
+                // Output Result
                 await printLog('<br><span class="text-white">--- API RESPONSE (JSON) ---</span>', 400);
                 const responseJSON = `
 <span class="text-green-300">{
   "status": "success",
   "data": {
     "action": "LONG",
-    "asset": "BTC/USDT",
+    "asset": "${symbolData.split(',')[0]}",
     "confidence_score": 0.89,
     "target_price": 65400.00
   },
@@ -199,15 +286,14 @@
 }</span>`;
                 await printLog(responseJSON, 800);
                 
-                // 恢复光标
                 await printLog('<div class="blinking-cursor mt-2"><span class="text-blue-400">echo@network</span>:<span class="text-gray-200">~</span>$ </div>', 500);
 
             } finally {
-                // 恢复按钮状态
+                // 恢复按钮状态（使用双语代码）
                 btn.disabled = false;
                 btn.classList.replace('bg-blue-800', 'bg-blue-600');
                 btn.classList.add('hover:bg-blue-500');
-                btnText.innerText = "在 TEE 环境中执行调用";
+                btnText.innerHTML = '<span class="zh-content">在 TEE 环境中执行调用 ($0.50)</span><span class="en-content">Execute in TEE ($0.50)</span>';
                 loadingIcon.classList.add('hidden');
             }
         });
