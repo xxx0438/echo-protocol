@@ -2,13 +2,14 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 import random
 
+# 初始化 FastAPI
 app = FastAPI()
 
 class ComputeRequest(BaseModel):
     symbol: str
     timeframe: str
 
-# 注意这里的路由必须和前端请求的地址一模一样
+# 注意这里的路径必须和你的文件路径一致
 @app.post("/api/predict")
 async def run_quant_model(request: ComputeRequest):
     # 处理前端传来的交易对
