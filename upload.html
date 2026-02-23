@@ -1,27 +1,74 @@
-<div class="bg-gray-900 rounded-xl border border-gray-800 p-8 shadow-lg">
-    <h3 class="text-xl font-bold text-white mb-6 border-b border-gray-800 pb-4">算法上架中心 (Developer Portal)</h3>
-    <div class="space-y-6">
-        <div>
-            <label class="block text-sm text-gray-400 mb-2">算法语义描述 (Semantic Description)</label>
-            <input type="text" placeholder="例如：基于均值回归的 BTC 高频统计套利模型" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-gray-200">
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label class="block text-sm text-gray-400 mb-2">计算环境 (Execution Env)</label>
-                <select class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-gray-200">
-                    <option>AWS Nitro Enclave (TEE)</option>
-                    <option>Intel SGX</option>
-                </select>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Echo Protocol | Upload Algorithm</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .en-content { display: none; }
+        body.lang-en .zh-content { display: none; }
+        body.lang-en .en-content { display: block; }
+        .gradient-border { position: relative; border-radius: 1rem; background: linear-gradient(135deg, #3b82f6, #8b5cf6); padding: 1px; }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-300 h-screen flex overflow-hidden">
+    <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col">
+        <div class="p-6 border-b border-gray-800"><h1 class="text-2xl font-bold text-blue-500">ECHO</h1></div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400">Agent Dashboard</a>
+            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400">Semantic Market</a>
+            <a href="upload.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">Developer Upload</a>
+        </nav>
+    </aside>
+
+    <main class="flex-1 p-12 overflow-y-auto bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-10">
+                <h2 class="text-3xl font-bold text-white tracking-tight">部署你的长尾算法</h2>
+                <p class="text-gray-400 mt-2">开发者获得 97.5% 的实时结算收益。Echo 提供 TEE 安全托管与 ZK 性能证明。</p>
             </div>
-            <div>
-                <label class="block text-sm text-gray-400 mb-2">版税比例 (Royalty %)</label>
-                <input type="number" value="97.5" disabled class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-gray-500">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-6">
+                    <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">算法语义描述 (AI Agent 搜索用)</label>
+                        <textarea rows="3" class="w-full bg-gray-950 border border-gray-700 rounded-xl p-4 text-sm focus:border-blue-500 outline-none" placeholder="描述你的算法能解决什么问题..."></textarea>
+                    </div>
+
+                    <div class="bg-gray-900 p-6 rounded-2xl border border-gray-800">
+                        <label class="block text-xs font-bold text-gray-500 uppercase mb-2">选择 TEE 执行环境</label>
+                        <select class="w-full bg-gray-950 border border-gray-700 rounded-xl p-4 text-sm">
+                            <option>AWS Nitro Enclave (推荐)</option>
+                            <option>Intel SGX v2</option>
+                            <option>Azure Confidential Computing</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="gradient-border h-full">
+                    <div class="bg-gray-950 rounded-[0.95rem] p-8 h-full flex flex-col items-center justify-center text-center">
+                        <div class="mb-4 text-blue-500">
+                            <svg class="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        </div>
+                        <p class="text-white font-bold">点击或拖拽源代码</p>
+                        <p class="text-xs text-gray-500 mt-2 italic">自动加密传输至 TEE 飞地</p>
+                        <button onclick="this.innerText='Generating ZK-POP...'" class="mt-8 bg-white text-black font-bold py-3 px-8 rounded-full hover:bg-blue-400 transition-all">部署算法</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 p-6 border border-yellow-900/30 bg-yellow-900/10 rounded-2xl flex justify-between items-center">
+                <div>
+                    <h4 class="text-yellow-500 font-bold">商业分润模式</h4>
+                    <p class="text-xs text-gray-400">Echo Protocol 仅收取 2.5% 的计算中转费，其余收益直接结算至你的钱包。</p>
+                </div>
+                <div class="text-right font-mono">
+                    <span class="text-2xl text-white">97.5%</span>
+                    <p class="text-[10px] text-gray-600">DEV ROYALTY</p>
+                </div>
             </div>
         </div>
-        <div class="border-2 border-dashed border-gray-700 rounded-xl p-10 text-center hover:border-blue-500 transition-colors cursor-pointer">
-            <p class="text-gray-400">点击或拖拽 Python 代码/模型权重至此</p>
-            <p class="text-xs text-gray-600 mt-2">支持 .py, .pth, .onnx (自动进行 ZK-POP 静态扫描)</p>
-        </div>
-        <button onclick="alert('ZK-Proof generating...')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 rounded-xl shadow-lg">部署并生成 ZK 证明</button>
-    </div>
-</div>
+    </main>
+</body>
+</html>
