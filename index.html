@@ -42,20 +42,22 @@
     <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-20 top-0">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="text-2xl font-bold text-blue-600 tracking-tight">ECHO Protocol</div>
-            <div class="flex items-center space-x-6 text-sm font-medium">
-                <a href="#problem" class="hover:text-blue-500 transition-colors">
+            <div class="flex items-center space-x-4 md:space-x-6 text-sm font-medium">
+                <a href="#problem" class="hidden md:inline hover:text-blue-500 transition-colors">
                     <span class="zh-content">痛点</span>
                     <span class="en-content">Problem</span>
                 </a>
-                <a href="#solution" class="hover:text-blue-500 transition-colors">
-                    <span class="zh-content">解决方案</span>
-                    <span class="en-content">Solution</span>
+                <a href="#solution" class="hidden md:inline hover:text-blue-500 transition-colors">
+                    <span class="zh-content">工作流</span>
+                    <span class="en-content">Workflow</span>
                 </a>
-                <a href="#vision" class="hover:text-blue-500 transition-colors">
-                    <span class="zh-content">愿景</span>
-                    <span class="en-content">Vision</span>
+                
+                <a href="#" class="text-blue-600 hover:text-blue-800 font-bold transition-colors">
+                    <span class="zh-content">进入 App &rarr;</span>
+                    <span class="en-content">Launch App &rarr;</span>
                 </a>
-                <button id="lang-toggle" onclick="toggleLanguage()" class="ml-4 px-4 py-1.5 bg-gray-900 hover:bg-gray-700 text-white rounded-full font-bold transition-all shadow-md">
+
+                <button id="lang-toggle" onclick="toggleLanguage()" class="ml-2 px-4 py-1.5 bg-gray-900 hover:bg-gray-700 text-white rounded-full font-bold transition-all shadow-md">
                     EN
                 </button>
             </div>
@@ -72,10 +74,19 @@
                 <span class="zh-content">将沉默在 GitHub 与 arXiv 中的有效工程算法转化为可验证的 API。我们不仅仅交易代码，我们交易的是“可验证的计算结果”。</span>
                 <span class="en-content">Echo turns high-value scientific algorithms into verifiable APIs that AI Agents can buy and use instantly. We trade "verifiable compute results".</span>
             </p>
-            <a href="#solution" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300">
-                <span class="zh-content">探索工作原理</span>
-                <span class="en-content">Explore How It Works</span>
-            </a>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <a href="#" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <span class="zh-content">输入计算需求</span>
+                    <span class="en-content">Input Compute Request</span>
+                </a>
+                <a href="#" class="w-full sm:w-auto bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-full font-bold hover:bg-blue-50 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    <span class="zh-content">上传至 ZK 容器</span>
+                    <span class="en-content">Upload to ZK Container</span>
+                </a>
+            </div>
         </div>
     </header>
 
@@ -133,6 +144,18 @@
 
             <div class="max-w-5xl mx-auto mb-16 bg-white p-4 md:p-8 rounded-2xl shadow-2xl transform transition hover:scale-[1.01] duration-300">
                 <img src="workflow.jpg" alt="Echo Protocol System Workflow" class="w-full h-auto rounded-lg">
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 mt-8">
+                <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition-colors flex items-center">
+                    <span class="zh-content">作为 Agent 发起请求</span>
+                    <span class="en-content">Request as an Agent</span>
+                </a>
+                <span class="text-gray-500 hidden sm:inline">或</span>
+                <a href="#" class="bg-gray-800 text-gray-300 border border-gray-600 px-6 py-3 rounded-full font-bold hover:bg-gray-700 hover:text-white transition-colors flex items-center">
+                    <span class="zh-content">作为开发者部署算法</span>
+                    <span class="en-content">Deploy Algorithm as Developer</span>
+                </a>
             </div>
             
             <div class="grid md:grid-cols-3 gap-8 text-center relative">
