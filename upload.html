@@ -9,19 +9,21 @@
         .en-content { display: none; }
         body.lang-en .zh-content { display: none; }
         body.lang-en .en-content { display: block; }
-        .gradient-box { background: linear-gradient(145deg, #111827, #030712); }
     </style>
 </head>
-<body class="bg-[#050508] text-gray-300 h-screen flex overflow-hidden">
+<body class="bg-gray-950 text-gray-300 font-sans h-screen flex overflow-hidden transition-colors duration-300">
 
-    <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col">
-        <div class="p-6 border-b border-gray-800"><h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO</h1></div>
-        <nav class="flex-1 p-4 space-y-2 text-sm">
-            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Dashboard</span>
+    <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
+        <div class="p-6 border-b border-gray-800">
+            <h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO<span class="text-gray-100">APP</span></h1>
+            <p class="text-xs text-gray-500 mt-1"><span class="zh-content">计算流动性层 v0.1</span><span class="en-content">Liquidity Layer v0.1</span></p>
+        </div>
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
+                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Task Dashboard</span>
             </a>
-            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Semantic Market</span>
+            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
+                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Echo Semantic API</span>
             </a>
             <a href="upload.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">
                 <span class="zh-content">开发者算法上架</span><span class="en-content">Developer Upload</span>
@@ -29,69 +31,51 @@
         </nav>
     </aside>
 
-    <main class="flex-1 flex flex-col overflow-hidden">
-        <header class="h-16 border-b border-gray-800 flex items-center px-8 justify-between bg-gray-900/30">
-            <h2 class="text-sm font-bold uppercase tracking-widest text-blue-400">Developer Portal</h2>
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="text-xs text-gray-400 hover:text-white transition-colors">
-                    <span class="zh-content">返回首页</span><span class="en-content">Back Home</span>
+    <main class="flex-1 flex flex-col overflow-hidden bg-gray-950">
+        <header class="h-16 border-b border-gray-800 flex items-center px-6 justify-between bg-gray-900/50">
+            <h2 class="text-lg font-semibold text-gray-200">
+                <span class="zh-content">开发者上架中心</span><span class="en-content">Developer Portal</span>
+            </h2>
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-gray-400 hover:text-white text-sm">
+                    <span class="zh-content">&larr; 返回官网</span><span class="en-content">&larr; Home</span>
                 </a>
-                <button onclick="toggleLang()" class="px-3 py-1 border border-gray-600 rounded text-xs font-bold">EN / 中</button>
+                <button onclick="document.body.classList.toggle('lang-en')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white rounded font-bold transition-all">EN / 中</button>
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-12 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent">
-            <div class="max-w-4xl mx-auto">
-                <div class="flex justify-between items-end mb-10">
+        <div class="flex-1 overflow-y-auto p-8">
+            <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg space-y-6">
                     <div>
-                        <h3 class="text-3xl font-bold text-white mb-2">
-                            <span class="zh-content">上架你的算法</span><span class="en-content">Deploy Your Algorithm</span>
-                        </h3>
-                        <p class="text-gray-500">
-                            <span class="zh-content">开发者将获得单次调用费用的 97.5% 作为实时奖励。</span>
-                            <span class="en-content">Developers receive 97.5% of the usage fee instantly.</span>
-                        </p>
+                        <label class="block text-sm text-gray-400 mb-2 font-medium"><span class="zh-content">算法语义标签</span><span class="en-content">Semantic Metadata</span></label>
+                        <textarea rows="3" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500" placeholder="描述算法能力..."></textarea>
                     </div>
-                    <div class="bg-gray-900 border border-gray-800 px-4 py-2 rounded-xl text-right">
-                        <p class="text-[10px] text-gray-500">Platform Commission</p>
-                        <p class="text-lg font-mono text-white">2.5%</p>
+                    <div>
+                        <label class="block text-sm text-gray-400 mb-2 font-medium"><span class="zh-content">硬件执行环境</span><span class="en-content">Execution Env</span></label>
+                        <select class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200">
+                            <option>AWS Nitro Enclave</option>
+                        </select>
+                    </div>
+                    <div class="bg-green-900/20 border border-green-800/50 rounded-lg p-4 flex justify-between">
+                        <span class="text-sm text-green-400">开发者分成比例 (Royalty)</span>
+                        <span class="text-sm font-bold text-green-400">97.5%</span>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                    <div class="space-y-6">
-                        <div class="gradient-box p-6 rounded-2xl border border-gray-800">
-                            <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">1. <span class="zh-content">算法语义标签</span><span class="en-content">Semantic Metadata</span></label>
-                            <textarea rows="4" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm focus:border-blue-500 outline-none transition-all" placeholder="Describe the problem your algorithm solves..."></textarea>
-                        </div>
-                        <div class="gradient-box p-6 rounded-2xl border border-gray-800">
-                            <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">2. <span class="zh-content">硬件隔离环境</span><span class="en-content">TEE Environment</span></label>
-                            <select class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm appearance-none">
-                                <option>AWS Nitro Enclave (Global Tier 1)</option>
-                                <option>Intel SGX v2</option>
-                            </select>
-                        </div>
+                <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg flex flex-col items-center justify-center text-center hover:border-blue-500 transition-colors cursor-pointer border-dashed border-2">
+                    <div class="w-16 h-16 bg-blue-900/30 rounded-full flex items-center justify-center mb-4 text-blue-500">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                     </div>
-
-                    <div class="bg-blue-600/5 border-2 border-dashed border-blue-500/30 rounded-3xl p-8 flex flex-col items-center justify-center text-center group hover:border-blue-500 transition-all">
-                        <div class="w-20 h-20 bg-blue-500/10 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <svg class="w-10 h-10 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                        </div>
-                        <h4 class="text-white font-bold mb-2">
-                            <span class="zh-content">上传源代码 / 权重</span><span class="en-content">Upload Source / Weights</span>
-                        </h4>
-                        <p class="text-xs text-gray-500 mb-8">Supporting .py, .pth, .onnx</p>
-                        <button onclick="alert('Preparing TEE & Generating ZK Proof...')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-2xl shadow-[0_0_20px_rgba(37,99,235,0.3)] transition-all">
-                            <span class="zh-content">立即部署并生成 ZK 证明</span><span class="en-content">Deploy & Generate ZKP</span>
-                        </button>
-                    </div>
+                    <p class="text-white font-bold mb-2"><span class="zh-content">拖拽代码或权重文件</span><span class="en-content">Drop Code / Weights</span></p>
+                    <p class="text-xs text-gray-500 mb-6">.py, .pth, .onnx</p>
+                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all w-full">
+                        <span class="zh-content">生成密码学证明 (ZK-POP)</span><span class="en-content">Generate ZK-POP</span>
+                    </button>
                 </div>
             </div>
         </div>
     </main>
-
-    <script>
-        function toggleLang() { document.body.classList.toggle('lang-en'); }
-    </script>
 </body>
 </html>
