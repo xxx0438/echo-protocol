@@ -1,134 +1,74 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Echo Protocol | Upload</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .en-content { display: none; }
-        body.lang-en .zh-content { display: none; }
-        body.lang-en .en-content { display: block; }
-        .gradient-box { background: linear-gradient(145deg, #111827, #030712); }
-    </style>
-</head>
-<body class="bg-gray-950 text-gray-300 font-sans h-screen flex overflow-hidden transition-colors duration-300">
+<div id="uploadUI" class="flex-1 flex flex-col items-center justify-center text-center cursor-pointer" onclick="document.getElementById('fileInput').click()">
+    <input type="file" id="fileInput" class="hidden" accept=".py,.pth,.onnx">
+    <div class="w-16 h-16 bg-blue-900/30 rounded-full flex items-center justify-center mb-6 text-blue-500">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+    </div>
+    <p class="text-white font-bold mb-2">
+        <span class="zh-content" id="fileNameDisplay">点击选择源代码 / 权重文件</span>
+        <span class="en-content">Click to select Source / Weights</span>
+    </p>
+    <button id="deployBtn" class="mt-8 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition-all w-full">
+        <span class="zh-content">部署并生成 ZK-POP 证明</span><span class="en-content">Deploy & Generate ZKP</span>
+    </button>
+</div>
 
-    <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
-        <div class="p-6 border-b border-gray-800">
-            <h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO<span class="text-gray-100">APP</span></h1>
-        </div>
-        <nav class="flex-1 p-4 space-y-2 text-sm">
-            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Dashboard</span>
-            </a>
-            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Semantic Market</span>
-            </a>
-            <a href="upload.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">
-                <span class="zh-content">开发者算法上架</span><span class="en-content">Developer Upload</span>
-            </a>
-        </nav>
-    </aside>
+<script>
+    // 监听文件选择，更新 UI 显示文件名
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+        if(e.target.files.length > 0) {
+            document.getElementById('fileNameDisplay').innerText = "已选择: " + e.target.files[0].name;
+            document.getElementById('fileNameDisplay').classList.add("text-green-400");
+        }
+    });
 
-    <main class="flex-1 flex flex-col overflow-hidden bg-gray-950">
-        <header class="h-16 border-b border-gray-800 flex items-center px-8 justify-between bg-gray-900/50">
-            <h2 class="text-lg font-semibold text-gray-200">
-                <span class="zh-content">开发者上架中心</span><span class="en-content">Developer Portal</span>
-            </h2>
-            <div class="flex items-center space-x-6">
-                <a href="index.html" class="text-xs text-gray-400 hover:text-white transition-colors">
-                    <span class="zh-content">返回首页</span><span class="en-content">Back Home</span>
-                </a>
-                <button onclick="document.body.classList.toggle('lang-en')" class="px-3 py-1 border border-gray-600 rounded text-xs font-bold hover:bg-gray-800">EN / 中</button>
-            </div>
-        </header>
+    document.getElementById('deployBtn').addEventListener('click', async function(e) {
+        e.stopPropagation(); // 防止触发外层的点击选择文件
+        const btn = this;
+        const fileInput = document.getElementById('fileInput');
+        
+        if (fileInput.files.length === 0) {
+            alert("请先选择要上传的算法文件！");
+            return;
+        }
 
-        <div class="flex-1 overflow-y-auto p-8 lg:p-12">
-            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="space-y-6">
-                    <div class="gradient-box p-6 rounded-2xl border border-gray-800">
-                        <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">1. <span class="zh-content">算法语义标签</span><span class="en-content">Semantic Metadata</span></label>
-                        <textarea id="metaInput" rows="4" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm focus:border-blue-500 outline-none" placeholder="描述算法能力..."></textarea>
-                    </div>
-                    <div class="gradient-box p-6 rounded-2xl border border-gray-800">
-                        <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">2. <span class="zh-content">硬件隔离环境</span><span class="en-content">TEE Environment</span></label>
-                        <select id="envInput" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm appearance-none">
-                            <option value="AWS_NITRO">AWS Nitro Enclave</option>
-                            <option value="INTEL_SGX">Intel SGX v2</option>
-                        </select>
-                    </div>
-                </div>
+        const meta = document.getElementById('metaInput').value || "No Description";
+        const env = document.getElementById('envInput').value;
+        
+        btn.disabled = true;
+        btn.innerHTML = '正在读取文件并加密传输...';
+        btn.classList.add('animate-pulse');
 
-                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-xl">
-                    <div id="uploadUI" class="flex-1 flex flex-col items-center justify-center text-center">
-                        <div class="w-16 h-16 bg-blue-900/30 rounded-full flex items-center justify-center mb-6 text-blue-500">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                        </div>
-                        <p class="text-white font-bold mb-2">
-                            <span class="zh-content">上传源代码 / 权重</span><span class="en-content">Upload Source / Weights</span>
-                        </p>
-                        <button id="deployBtn" class="mt-8 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition-all w-full">
-                            <span class="zh-content">部署并生成 ZK-POP 证明</span><span class="en-content">Deploy & Generate ZKP</span>
-                        </button>
-                    </div>
+        // 真实构建文件表单 (Multipart/form-data)
+        const formData = new FormData();
+        formData.append("file", fileInput.files[0]);
+        formData.append("metadata", meta);
+        formData.append("environment", env);
 
-                    <div id="successUI" class="hidden flex-1 flex flex-col items-center justify-center text-center">
-                        <div class="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mb-4 text-green-500">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-                        </div>
-                        <h4 class="text-green-400 font-bold text-lg mb-2">部署成功！(Onboarded)</h4>
-                        <p class="text-xs text-gray-400 mb-4">你的算法已获批营业执照，等待 Agent 调用。</p>
-                        <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 w-full text-left space-y-2">
-                            <p class="text-[10px] text-gray-500">模型 ID: <span id="modelIdDisplay" class="text-blue-400 font-mono"></span></p>
-                            <p class="text-[10px] text-gray-500">ZK-POP 哈希: <span id="zkHashDisplay" class="text-purple-400 font-mono break-all"></span></p>
-                            <p class="text-[10px] text-gray-500">认证指标: <span id="metricsDisplay" class="text-yellow-400 font-mono"></span></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        document.getElementById('deployBtn').addEventListener('click', async function() {
-            const btn = this;
-            const meta = document.getElementById('metaInput').value || "No Description";
-            const env = document.getElementById('envInput').value;
+        try {
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData // 发送真实文件！
+            });
             
-            btn.disabled = true;
-            btn.innerHTML = '<span class="zh-content">正在验证环境与生成证明...</span><span class="en-content">Generating Proof...</span>';
-            btn.classList.add('animate-pulse');
-
-            try {
-                // 【真实网络请求】：连接到最新的 Python 后端
-                const response = await fetch('/api/upload', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ metadata: meta, environment: env })
-                });
+            if (response.ok) {
+                const respData = await response.json();
+                const realData = respData.data;
                 
-                if (response.ok) {
-                    const respData = await response.json();
-                    const realData = respData.data; // 从后端拿到的真实数据
-                    
-                    document.getElementById('uploadUI').classList.add('hidden');
-                    document.getElementById('successUI').classList.remove('hidden');
-                    document.getElementById('successUI').classList.add('flex');
-                    
-                    // 【动态渲染后端真实数据】
-                    document.getElementById('modelIdDisplay').innerText = realData.model_id;
-                    document.getElementById('zkHashDisplay').innerText = realData.zk_pop_hash;
-                    document.getElementById('metricsDisplay').innerText = `Sharpe ${realData.certified_metrics.sharpe_ratio}, Acc ${realData.certified_metrics.accuracy}`;
-                } else {
-                    alert("网络错误，请稍后再试。");
-                    btn.disabled = false;
-                    btn.classList.remove('animate-pulse');
-                }
-            } catch(e) {
-                console.error(e);
+                document.getElementById('uploadUI').classList.add('hidden');
+                document.getElementById('successUI').classList.remove('hidden');
+                document.getElementById('successUI').classList.add('flex');
+                
+                // 渲染基于物理文件生成的真实 Hash
+                document.getElementById('modelIdDisplay').innerText = realData.model_id + " (" + realData.file_name + ")";
+                document.getElementById('zkHashDisplay').innerText = realData.zk_pop_hash;
+                document.getElementById('metricsDisplay').innerText = `Sharpe ${realData.certified_metrics.sharpe_ratio}`;
+            } else {
+                alert("上传失败，请检查网络。");
+                btn.disabled = false;
+                btn.classList.remove('animate-pulse');
             }
-        });
-    </script>
-</body>
-</html>
+        } catch(err) {
+            console.error(err);
+        }
+    });
+</script>
