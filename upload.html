@@ -9,6 +9,7 @@
         .en-content { display: none; }
         body.lang-en .zh-content { display: none; }
         body.lang-en .en-content { display: block; }
+        .gradient-box { background: linear-gradient(145deg, #111827, #030712); }
     </style>
 </head>
 <body class="bg-gray-950 text-gray-300 font-sans h-screen flex overflow-hidden transition-colors duration-300">
@@ -16,14 +17,13 @@
     <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
         <div class="p-6 border-b border-gray-800">
             <h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO<span class="text-gray-100">APP</span></h1>
-            <p class="text-xs text-gray-500 mt-1"><span class="zh-content">计算流动性层 v0.1</span><span class="en-content">Liquidity Layer v0.1</span></p>
         </div>
-        <nav class="flex-1 p-4 space-y-2">
-            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
-                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Task Dashboard</span>
+        <nav class="flex-1 p-4 space-y-2 text-sm">
+            <a href="app.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
+                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Dashboard</span>
             </a>
-            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
-                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Echo Semantic API</span>
+            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
+                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Semantic Market</span>
             </a>
             <a href="upload.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">
                 <span class="zh-content">开发者算法上架</span><span class="en-content">Developer Upload</span>
@@ -32,50 +32,103 @@
     </aside>
 
     <main class="flex-1 flex flex-col overflow-hidden bg-gray-950">
-        <header class="h-16 border-b border-gray-800 flex items-center px-6 justify-between bg-gray-900/50">
+        <header class="h-16 border-b border-gray-800 flex items-center px-8 justify-between bg-gray-900/50">
             <h2 class="text-lg font-semibold text-gray-200">
                 <span class="zh-content">开发者上架中心</span><span class="en-content">Developer Portal</span>
             </h2>
-            <div class="flex items-center space-x-4">
-                <a href="index.html" class="text-gray-400 hover:text-white text-sm">
-                    <span class="zh-content">&larr; 返回官网</span><span class="en-content">&larr; Home</span>
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-xs text-gray-400 hover:text-white transition-colors">
+                    <span class="zh-content">返回首页</span><span class="en-content">Back Home</span>
                 </a>
-                <button onclick="document.body.classList.toggle('lang-en')" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white rounded font-bold transition-all">EN / 中</button>
+                <button onclick="document.body.classList.toggle('lang-en')" class="px-3 py-1 border border-gray-600 rounded text-xs font-bold hover:bg-gray-800">EN / 中</button>
             </div>
         </header>
 
-        <div class="flex-1 overflow-y-auto p-8">
-            <div class="max-w-4xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="flex-1 overflow-y-auto p-8 lg:p-12">
+            <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
                 
-                <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg space-y-6">
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2 font-medium"><span class="zh-content">算法语义标签</span><span class="en-content">Semantic Metadata</span></label>
-                        <textarea rows="3" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500" placeholder="描述算法能力..."></textarea>
+                <div class="space-y-6">
+                    <div class="gradient-box p-6 rounded-2xl border border-gray-800">
+                        <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">1. <span class="zh-content">算法语义标签</span><span class="en-content">Semantic Metadata</span></label>
+                        <textarea id="metaInput" rows="4" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm focus:border-blue-500 outline-none" placeholder="描述算法能力..."></textarea>
                     </div>
-                    <div>
-                        <label class="block text-sm text-gray-400 mb-2 font-medium"><span class="zh-content">硬件执行环境</span><span class="en-content">Execution Env</span></label>
-                        <select class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200">
-                            <option>AWS Nitro Enclave</option>
+                    <div class="gradient-box p-6 rounded-2xl border border-gray-800">
+                        <label class="block text-xs font-bold text-blue-500 mb-4 uppercase">2. <span class="zh-content">硬件隔离环境</span><span class="en-content">TEE Environment</span></label>
+                        <select id="envInput" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-4 text-sm appearance-none">
+                            <option value="AWS_NITRO">AWS Nitro Enclave</option>
+                            <option value="INTEL_SGX">Intel SGX v2</option>
                         </select>
-                    </div>
-                    <div class="bg-green-900/20 border border-green-800/50 rounded-lg p-4 flex justify-between">
-                        <span class="text-sm text-green-400">开发者分成比例 (Royalty)</span>
-                        <span class="text-sm font-bold text-green-400">97.5%</span>
                     </div>
                 </div>
 
-                <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg flex flex-col items-center justify-center text-center hover:border-blue-500 transition-colors cursor-pointer border-dashed border-2">
-                    <div class="w-16 h-16 bg-blue-900/30 rounded-full flex items-center justify-center mb-4 text-blue-500">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 flex flex-col relative overflow-hidden shadow-xl">
+                    <div id="uploadUI" class="flex-1 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 bg-blue-900/30 rounded-full flex items-center justify-center mb-6 text-blue-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        </div>
+                        <p class="text-white font-bold mb-2">
+                            <span class="zh-content">上传源代码 / 权重</span><span class="en-content">Upload Source / Weights</span>
+                        </p>
+                        <p class="text-xs text-gray-500 mb-8">Supporting .py, .pth, .onnx</p>
+                        
+                        <button id="deployBtn" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg transition-all w-full">
+                            <span class="zh-content">部署并向全网广播 ZK 证明</span><span class="en-content">Deploy & Broadcast ZKP</span>
+                        </button>
                     </div>
-                    <p class="text-white font-bold mb-2"><span class="zh-content">拖拽代码或权重文件</span><span class="en-content">Drop Code / Weights</span></p>
-                    <p class="text-xs text-gray-500 mb-6">.py, .pth, .onnx</p>
-                    <button class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg shadow-lg transition-all w-full">
-                        <span class="zh-content">生成密码学证明 (ZK-POP)</span><span class="en-content">Generate ZK-POP</span>
-                    </button>
+
+                    <div id="successUI" class="hidden flex-1 flex flex-col items-center justify-center text-center">
+                        <div class="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mb-4 text-green-500">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </div>
+                        <h4 class="text-green-400 font-bold text-lg mb-2">部署成功！</h4>
+                        <p class="text-xs text-gray-400 mb-4">你的算法已受智能合约保护，收益分成已锁定为 97.5%。</p>
+                        <div class="bg-gray-950 p-4 rounded-lg border border-gray-800 w-full text-left">
+                            <p class="text-[10px] text-gray-500 mb-1">生成的唯一 ZK-POP 认证哈希:</p>
+                            <p id="zkHashDisplay" class="text-purple-400 font-mono text-xs break-all"></p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </main>
+
+    <script>
+        // 真实处理上传请求逻辑
+        document.getElementById('deployBtn').addEventListener('click', async function() {
+            const btn = this;
+            const meta = document.getElementById('metaInput').value || "No Description";
+            const env = document.getElementById('envInput').value;
+            
+            btn.disabled = true;
+            btn.innerText = "正在编译与加密传输...";
+            btn.classList.add('animate-pulse');
+
+            try {
+                // 向真正的 Python 后端发请求
+                const response = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ metadata: meta, environment: env })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    // 切换 UI 显示真实的 Hash
+                    document.getElementById('uploadUI').classList.add('hidden');
+                    document.getElementById('successUI').classList.remove('hidden');
+                    document.getElementById('successUI').classList.add('flex');
+                    document.getElementById('zkHashDisplay').innerText = data.zk_pop_hash;
+                } else {
+                    alert("网络错误，请稍后再试。");
+                    btn.innerText = "重新部署";
+                    btn.disabled = false;
+                    btn.classList.remove('animate-pulse');
+                }
+            } catch(e) {
+                console.error(e);
+            }
+        });
+    </script>
 </body>
 </html>
