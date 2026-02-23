@@ -1,0 +1,27 @@
+<div class="bg-gray-900 rounded-xl border border-gray-800 p-8 shadow-lg">
+    <h3 class="text-xl font-bold text-white mb-6 border-b border-gray-800 pb-4">算法上架中心 (Developer Portal)</h3>
+    <div class="space-y-6">
+        <div>
+            <label class="block text-sm text-gray-400 mb-2">算法语义描述 (Semantic Description)</label>
+            <input type="text" placeholder="例如：基于均值回归的 BTC 高频统计套利模型" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-gray-200">
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">计算环境 (Execution Env)</label>
+                <select class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-gray-200">
+                    <option>AWS Nitro Enclave (TEE)</option>
+                    <option>Intel SGX</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm text-gray-400 mb-2">版税比例 (Royalty %)</label>
+                <input type="number" value="97.5" disabled class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-gray-500">
+            </div>
+        </div>
+        <div class="border-2 border-dashed border-gray-700 rounded-xl p-10 text-center hover:border-blue-500 transition-colors cursor-pointer">
+            <p class="text-gray-400">点击或拖拽 Python 代码/模型权重至此</p>
+            <p class="text-xs text-gray-600 mt-2">支持 .py, .pth, .onnx (自动进行 ZK-POP 静态扫描)</p>
+        </div>
+        <button onclick="alert('ZK-Proof generating...')" class="w-full bg-purple-600 hover:bg-purple-500 text-white font-bold py-4 rounded-xl shadow-lg">部署并生成 ZK 证明</button>
+    </div>
+</div>
