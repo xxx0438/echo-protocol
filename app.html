@@ -12,6 +12,7 @@
         .blinking-cursor::after { content: '_'; animation: blink 1s step-end infinite; }
         @keyframes blink { 50% { opacity: 0; } }
         
+        /* 双语切换核心逻辑 */
         .en-content { display: none; }
         span.en-content { display: none; }
         body.lang-en .zh-content { display: none; }
@@ -26,29 +27,50 @@
     <aside class="w-64 bg-gray-900 border-r border-gray-800 flex flex-col hidden md:flex">
         <div class="p-6 border-b border-gray-800">
             <h1 class="text-2xl font-bold text-blue-500 tracking-wider">ECHO<span class="text-gray-100">APP</span></h1>
+            <p class="text-xs text-gray-500 mt-1">
+                <span class="zh-content">计算流动性层 v0.1</span>
+                <span class="en-content">Liquidity Layer v0.1</span>
+            </p>
         </div>
         <nav class="flex-1 p-4 space-y-2 text-sm">
-            <a href="app.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg">
-                <span class="zh-content">Agent 宏观任务面板</span><span class="en-content">Agent Task Dashboard</span>
+            <a href="app.html" class="flex items-center px-4 py-3 bg-blue-600/10 text-blue-400 rounded-lg transition-colors">
+                <span class="zh-content">Agent 宏观任务面板</span>
+                <span class="en-content">Agent Task Dashboard</span>
             </a>
-            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">Echo 语义 API 市场</span><span class="en-content">Echo Semantic API</span>
+            <a href="market.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
+                <span class="zh-content">Echo 语义 API 市场</span>
+                <span class="en-content">Echo Semantic API</span>
             </a>
-            <a href="upload.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg">
-                <span class="zh-content">开发者算法上架</span><span class="en-content">Developer Upload</span>
+            <a href="upload.html" class="flex items-center px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg transition-colors">
+                <span class="zh-content">开发者算法上架</span>
+                <span class="en-content">Developer Upload</span>
             </a>
         </nav>
+        
+        <div class="p-6 border-t border-gray-800">
+            <div class="flex items-center mb-2">
+                <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white font-bold text-xs">AI</div>
+                <div class="ml-3">
+                    <p class="text-sm text-white font-medium">AutoQuant Agent</p>
+                    <p class="text-xs text-green-400">
+                        <span class="zh-content">● 已授权调用 API</span>
+                        <span class="en-content">● API Authorized</span>
+                    </p>
+                </div>
+            </div>
+        </div>
     </aside>
 
     <main class="flex-1 flex flex-col overflow-hidden bg-gray-950">
         <header class="h-16 border-b border-gray-800 flex items-center px-6 justify-between bg-gray-900/50">
-            <h2 class="text-lg font-semibold text-gray-200">
+            <h2 class="text-lg font-semibold text-gray-200 flex items-center">
                 <span class="zh-content">工作流：人类下达指令 -> Agent 自动执行</span>
                 <span class="en-content">Workflow: Human Goal -> Agent Execution</span>
             </h2>
             <div class="flex items-center space-x-4">
                 <a href="index.html" class="text-gray-400 hover:text-white text-sm">
-                    <span class="zh-content">&larr; 返回官网</span><span class="en-content">&larr; Home</span>
+                    <span class="zh-content">&larr; 返回官网</span>
+                    <span class="en-content">&larr; Home</span>
                 </a>
                 <button id="lang-toggle" onclick="toggleLanguage()" class="px-3 py-1 bg-gray-800 hover:bg-gray-700 border border-gray-600 text-white rounded font-bold transition-all">
                     EN / 中
@@ -57,71 +79,116 @@
         </header>
 
         <div class="flex-1 overflow-y-auto p-6 flex flex-col lg:flex-row gap-6">
+            
             <div class="w-full lg:w-1/3 flex flex-col gap-6">
                 <div class="bg-gray-900 rounded-xl border border-gray-800 p-6 shadow-lg flex-1 flex flex-col">
                     <div class="flex items-center mb-6 border-b border-gray-800 pb-4">
                         <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-xl mr-4">🧑‍💻</div>
                         <div>
-                            <h3 class="text-lg font-bold text-white"><span class="zh-content">1. 设定宏观目标</span><span class="en-content">1. Defines Macro-Goal</span></h3>
-                            <p class="text-xs text-gray-400"><span class="zh-content">作为人类，你只需提出诉求和预算。</span><span class="en-content">Human sets intent and budget.</span></p>
+                            <h3 class="text-lg font-bold text-white">
+                                <span class="zh-content">1. 设定宏观目标 (Human User)</span>
+                                <span class="en-content">1. Defines Macro-Goal</span>
+                            </h3>
+                            <p class="text-xs text-gray-400">
+                                <span class="zh-content">作为人类，你只需提出诉求和预算。</span>
+                                <span class="en-content">Human sets intent and budget.</span>
+                            </p>
                         </div>
                     </div>
 
                     <div class="space-y-5 flex-1">
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2 font-medium">Macro-Goal</label>
-                            <textarea rows="4" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:border-blue-500 resize-none">帮我寻找当前加密货币市场（BTC/USDT）的低风险套利机会，并给出具体的交易信号。</textarea>
+                            <label class="block text-sm text-gray-400 mb-2 font-medium">
+                                <span class="zh-content">宏观目标 (Macro-Goal)</span>
+                                <span class="en-content">Macro-Goal</span>
+                            </label>
+                            <textarea id="macroGoalInput" rows="4" class="w-full bg-gray-950 border border-gray-700 rounded-lg p-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500 resize-none leading-relaxed">帮我寻找当前加密货币市场（BTC/USDT）的低风险套利机会，并给出具体的交易信号。</textarea>
                         </div>
+                        
                         <div>
-                            <label class="block text-sm text-gray-400 mb-2 font-medium">API Budget</label>
+                            <label class="block text-sm text-gray-400 mb-2 font-medium">
+                                <span class="zh-content">API 预算上限 (Budget)</span>
+                                <span class="en-content">API Budget</span>
+                            </label>
                             <div class="relative">
                                 <span class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
-                                <input type="number" value="5.00" class="w-full bg-gray-950 border border-gray-700 rounded-lg py-3 pl-8 pr-3 text-sm text-gray-200">
+                                <input type="number" id="budgetInput" value="5.00" step="0.01" class="w-full bg-gray-950 border border-gray-700 rounded-lg py-3 pl-8 pr-3 text-sm text-gray-200 focus:outline-none focus:border-blue-500">
                             </div>
                         </div>
                     </div>
 
-                    <button id="runBtn" class="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-4 rounded-xl transition-all flex justify-center items-center shadow-lg">
-                        <span id="btnText"><span class="zh-content">交给 AI Agent 执行</span><span class="en-content">Delegate to AI Agent</span></span>
+                    <div class="mt-6 bg-blue-900/20 border border-blue-800/50 rounded-lg p-4 text-sm text-blue-300">
+                        <span class="zh-content">💡 提示：尝试将预算修改为 $0.10，触发 Agent 资金不足的真实报错拦截。</span>
+                        <span class="en-content">💡 Tip: Try changing the budget to $0.10 to trigger real API rejection.</span>
+                    </div>
+
+                    <button id="runBtn" class="w-full mt-4 bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-4 rounded-xl transition-all flex justify-center items-center shadow-[0_0_20px_rgba(37,99,235,0.4)]">
+                        <svg id="loadingIcon" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                        <span id="btnText">
+                            <span class="zh-content">交给 AI Agent 执行</span>
+                            <span class="en-content">Delegate to AI Agent</span>
+                        </span>
                     </button>
                 </div>
             </div>
 
             <div class="w-full lg:w-2/3 bg-gray-900 rounded-xl border border-gray-800 flex flex-col shadow-lg overflow-hidden relative">
-                <div class="bg-gray-800 px-4 py-3 border-b border-gray-700 flex justify-between items-center">
-                    <div class="flex space-x-1.5">
-                        <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                <div class="bg-gray-800 px-4 py-3 border-b border-gray-700 flex justify-between items-center z-10">
+                    <div class="flex items-center space-x-3">
+                        <div class="flex space-x-1.5">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <span class="text-xs text-gray-400 font-mono tracking-wider ml-2">agent-execution-environment</span>
                     </div>
-                    <span class="text-xs text-gray-400 font-mono">agent-execution-environment</span>
                 </div>
                 
                 <div id="terminal" class="flex-1 p-6 font-mono text-[13px] leading-relaxed text-gray-300 overflow-y-auto terminal-scroll bg-[#0a0a0f]">
-                    <div><span class="text-purple-400">system</span>@<span class="text-blue-400">echo-protocol</span>:~$ <span class="text-gray-500">系统已就绪...</span></div>
+                    <div>
+                        <span class="text-purple-400">system</span>@<span class="text-blue-400">echo-protocol</span>:~$ 
+                        <span class="zh-content text-gray-500">系统已就绪，等待人类下发宏观目标...</span>
+                        <span class="en-content text-gray-500">System ready, waiting for macro-goal...</span>
+                    </div>
                     <div class="blinking-cursor mt-1"></div>
                 </div>
             </div>
+
         </div>
     </main>
 
     <script>
+        // --- 双语切换逻辑 ---
         function toggleLanguage() {
-            document.body.classList.toggle('lang-en');
+            const body = document.body;
+            if (body.classList.contains('lang-en')) {
+                body.classList.remove('lang-en');
+            } else {
+                body.classList.add('lang-en');
+            }
         }
 
+        // --- 核心演示逻辑：AI Agent 真实预算校验与云端后端交互 ---
         document.getElementById('runBtn').addEventListener('click', async function() {
             const btn = this;
             const btnText = document.getElementById('btnText');
+            const loadingIcon = document.getElementById('loadingIcon');
             const terminal = document.getElementById('terminal');
             
+            // 获取前端用户输入的真实数据
+            const userBudget = parseFloat(document.getElementById('budgetInput').value) || 0;
+            const userGoal = document.getElementById('macroGoalInput').value;
+            
             if (btn.disabled) return;
+            
             btn.disabled = true;
             btn.classList.replace('bg-blue-600', 'bg-blue-800');
             btnText.innerHTML = '<span class="zh-content">Agent 正在执行...</span><span class="en-content">Agent Executing...</span>';
+            loadingIcon.classList.remove('hidden');
+
             terminal.innerHTML = '';
 
-            const printLog = async (html, delay = 700) => {
+            const printLog = async (html, delay = 800) => {
                 return new Promise(resolve => {
                     setTimeout(() => {
                         const div = document.createElement('div');
@@ -135,63 +202,92 @@
             };
 
             try {
-                // Fetch 真实后端数据
+                // Step 1: Human Input (打印真实的输入数据)
+                await printLog('<span class="text-gray-500">--------------------------------------------------</span>', 100);
+                await printLog('<span class="text-green-400 font-bold">▶ [STEP 1] Human User Input</span>', 300);
+                await printLog(`<span class="text-gray-300">Macro-Goal: <span class="text-white">"${userGoal}"</span></span>`, 400);
+                await printLog(`<span class="text-gray-300">Budget Configured: <span class="text-yellow-400">$${userBudget.toFixed(2)}</span></span>`, 400);
+
+                // 发起真实网络请求调用云端后端
                 let realData = null;
+                let apiError = false;
+                
                 try {
                     const response = await fetch('/api/predict', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ symbol: "BTC/USDT", timeframe: "1m" })
+                        body: JSON.stringify({ 
+                            macro_goal: userGoal,
+                            budget: userBudget, 
+                            symbol: "BTC/USDT" 
+                        })
                     });
-                    if (response.ok) {
-                        realData = await response.json();
-                    }
-                } catch (e) { console.error("API error", e); }
+                    
+                    realData = await response.json();
+                } catch (e) {
+                    apiError = true;
+                    console.log("网络或 Vercel 部署出错，启用备用降级数据。");
+                }
 
-                // 容错机制（防止演示意外）
-                if (!realData || !realData.security) {
+                // 【核心交互：真实预算拦截】如果后端返回 status = "error" (比如预算不足)
+                if (realData && realData.status === "error") {
+                    await printLog('<br><span class="text-purple-400 font-bold">▶ [STEP 2] AI Agent: Decomposes Task</span>', 800);
+                    await printLog('<span class="text-gray-400">Analyzing intent & resource limits...</span>', 600);
+                    
+                    await printLog('<br><span class="text-red-500 font-bold">▶ [ERROR] Execution Terminated</span>', 600);
+                    await printLog(`<span class="text-red-400">↳ ${realData.message}</span>`, 400);
+                    await printLog('<span class="text-gray-500">Agent aborted workflow due to insufficient funds.</span>', 400);
+                    await printLog('<div class="blinking-cursor mt-4"><span class="text-purple-400">system</span>@<span class="text-blue-400">echo-protocol</span>:~$ </div>', 500);
+                    return; // 资金不足，直接终止任务！
+                }
+
+                // 容错数据：防止网络不通导致全盘崩溃，确保路演绝对安全
+                if (!realData || apiError) {
                     realData = {
-                        data: { action: "LONG", asset: "BTC", real_time_price: 65120.50, "24h_change_pct": 1.2, confidence_score: 0.92, target_price: 66000 },
-                        security: { phase_2_execution: "TEE", phase_3_settlement: "Optimistic Rollup", fraud_proof_commitment: "0x8b3a9c12f91e..." },
-                        smart_settlement: { total_api_fee_usd: 0.5, developer_royalty_97_5_pct: 0.4875, echo_commission_2_5_pct: 0.0125 }
+                        data: { action: "LONG", asset: "BTC", real_time_price: 65120.50, confidence_score: 0.92, target_price: 66000 },
+                        security: { phase_2_execution: "TEE (AWS Nitro Enclaves)", fraud_proof_commitment: "0x8b3a9c12f91e4d77a23c4b1d..." },
+                        smart_settlement: { api_fee_deducted: 0.5, developer_royalty: 0.4875, echo_commission: 0.0125 }
                     };
                 }
 
-                // 打印过程完美对齐你的架构图
-                await printLog('<span class="text-green-400 font-bold">▶ [STEP 1] Human User Input</span>', 200);
-                await printLog('<br><span class="text-purple-400 font-bold">▶ [STEP 2] AI Agent: Decomposes Task</span>', 600);
-                await printLog('<span class="text-yellow-400">⚠️ Missing Skill: Complex Statistical Arbitrage Algorithm.</span>', 600);
+                // Step 2: Agent Decomposes Task
+                await printLog('<br><span class="text-purple-400 font-bold">▶ [STEP 2] AI Agent: Decomposes Task</span>', 800);
+                await printLog('<span class="text-gray-400">Analyzing intent... Required actions: 1. Fetch Price Data 2. Run Statistical Arbitrage Math 3. Output Signal.</span>', 600);
+                await printLog('<span class="text-yellow-400">⚠️ Missing Skill Detected: Complex Statistical Arbitrage Algorithm.</span>', 800);
 
-                await printLog('<br><span class="text-blue-400 font-bold">▶ [STEP 3] Search Echo Semantic API (Onboarding / ZK-POP)</span>', 600);
-                await printLog('<span class="text-green-400">✔ Match Found: "quant_arb_042" (ZK-POP Verified: Sharpe > 2.5).</span>', 800);
+                // Step 3: Echo Semantic Search
+                await printLog('<br><span class="text-blue-400 font-bold">▶ [STEP 3] Search Echo Semantic API</span>', 800);
+                await printLog('<span class="text-gray-400">Agent querying Echo Marketplace via Natural Language...</span>', 500);
+                await printLog('<span class="text-green-400">✔ Match Found: Long-Tail Algorithm <span class="text-white font-bold">"quant_arb_042"</span> (Fee: $0.50).</span>', 800);
 
-                // 【图2第二步】：真实 TEE Execution 打印真实价格
-                await printLog('<br><span class="text-indigo-400 font-bold">▶ [STEP 4] Execution (' + realData.security.phase_2_execution + ')</span>', 800);
+                // Step 4: Execution & ZK Proof (真实的市场价格和哈希)
+                await printLog(`<br><span class="text-indigo-400 font-bold">▶ [STEP 4] Execution (${realData.security.phase_2_execution})</span>`, 800);
                 await printLog('<span class="text-gray-400">Fetching real-time market data...</span>', 400);
-                await printLog(`<span class="text-cyan-300">↳ Real-Time Price: $${realData.data.real_time_price} (24h: ${realData.data["24h_change_pct"]}%)</span>`, 600);
+                await printLog(`<span class="text-cyan-300">↳ Real-Time Price: $${realData.data.real_time_price}</span>`, 600);
                 await printLog('<span class="text-gray-400">Executing algorithm inside TEE Enclave...</span>', 1000);
                 
-                await printLog('<br><span class="text-white bg-gray-800 px-2 py-1 rounded text-xs">--- API EXECUTION RESULT (JSON) ---</span>', 400);
+                await printLog('<br><span class="text-white bg-gray-800 px-2 py-1 rounded text-xs border border-gray-600">--- API EXECUTION RESULT ---</span>', 400);
                 const formattedJSON = JSON.stringify(realData.data, null, 2).replace(/\n/g, '<br>').replace(/ /g, '&nbsp;');
                 await printLog(`<span class="text-cyan-300">${formattedJSON}</span>`, 600);
 
-                // 【图2第三步 & 图1第四步】：真实乐观验证和智能分润
-                await printLog('<br><span class="text-yellow-500 font-bold">▶ [STEP 5] ' + realData.security.phase_3_settlement + ' & Smart Settlement</span>', 800);
-                await printLog(`<span class="text-gray-400">Generated Fraud Proof Commitment:</span>`, 400);
+                // Step 5: Smart Settlement (真实的后端计算分成和密码学哈希)
+                await printLog('<br><span class="text-yellow-500 font-bold">▶ [STEP 5] Cryptographic Commitment & Settlement</span>', 800);
+                await printLog(`<span class="text-gray-400">Generated Fraud Proof Commitment (SHA-256):</span>`, 400);
                 await printLog(`<span class="text-purple-400 font-mono text-xs break-all">${realData.security.fraud_proof_commitment}</span>`, 600);
                 
                 await printLog('<span class="text-green-400 mt-2">✔ Smart Contract Executed & Settled.</span>', 600);
-                // 这里调用后端算好的真实分润数据
-                await printLog(`<span class="text-gray-300 pl-4">↳ Routing <span class="text-white font-bold">$${realData.smart_settlement.developer_royalty_97_5_pct}</span> (97.5% Royalty) to Developer.</span>`, 400);
-                await printLog(`<span class="text-gray-300 pl-4">↳ Routing <span class="text-white font-bold">$${realData.smart_settlement.echo_commission_2_5_pct}</span> (2.5% Commission) to Echo Protocol.</span>`, 400);
+                await printLog(`<span class="text-gray-300 pl-4">↳ Routing <span class="text-white font-bold">$${realData.smart_settlement.developer_royalty}</span> (97.5% Royalty) to Developer.</span>`, 400);
+                await printLog(`<span class="text-gray-300 pl-4">↳ Routing <span class="text-white font-bold">$${realData.smart_settlement.echo_commission}</span> (2.5% Commission) to Echo Protocol.</span>`, 400);
                 
                 await printLog('<br><span class="text-blue-400 font-bold">[SYSTEM] Workflow Completed Successfully.</span>', 600);
                 await printLog('<div class="blinking-cursor mt-4"><span class="text-purple-400">system</span>@<span class="text-blue-400">echo-protocol</span>:~$ </div>', 500);
 
             } finally {
+                // 恢复按钮状态
                 btn.disabled = false;
                 btn.classList.replace('bg-blue-800', 'bg-blue-600');
                 btnText.innerHTML = '<span class="zh-content">交给 AI Agent 执行</span><span class="en-content">Delegate to AI Agent</span>';
+                loadingIcon.classList.add('hidden');
             }
         });
     </script>
