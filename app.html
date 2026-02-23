@@ -212,17 +212,18 @@
             }
         }
 
-        // --- 模拟 API 调用与终端逻辑 ---
+        // --- 云端 API 调用与终端逻辑 ---
         document.getElementById('runBtn').addEventListener('click', async function() {
             const btn = this;
             const btnText = document.getElementById('btnText');
             const loadingIcon = document.getElementById('loadingIcon');
             const terminal = document.getElementById('terminal');
             const symbolData = document.getElementById('symbolInput').value; 
+            const timeframeData = document.querySelector('select').value;
             
             if (btn.disabled) return;
             
-            // 改变按钮状态（使用双语代码）
+            // 改变按钮状态
             btn.disabled = true;
             btn.classList.replace('bg-blue-600', 'bg-blue-800');
             btn.classList.remove('hover:bg-blue-500');
@@ -231,7 +232,7 @@
 
             terminal.innerHTML = '';
 
-            const printLog = async (html, delay = 800) => {
+            const printLog = async (html, delay = 600) => {
                 return new Promise(resolve => {
                     setTimeout(() => {
                         const div = document.createElement('div');
@@ -244,52 +245,61 @@
             };
 
             try {
-                // Phase 0
-                await printLog('<span class="text-blue-400">echo@network</span>:~$ > echo-cli invoke --model quant_arb_042 --data "' + symbolData + '"', 200);
-                await printLog('<span class="text-gray-500"><span class="zh-content">[系统] 正在初始化与 Echo 网关的连接...</span><span class="en-content">[System] Initiating connection to Echo Gateway...</span></span>', 500);
-                await printLog('<span class="text-green-400"><span class="zh-content">✔ 企业 API 密钥已验证。从法币余额中扣除 $0.50...</span><span class="en-content">✔ Enterprise API Key Validated. Deducting $0.50 from fiat balance...</span></span>', 600);
+                // Phase 0: 打印连接信息
+                await printLog('<span class="text-blue-400">echo@network</span>:~$ > echo-cli invoke --model quant_arb_042 --data "' + symbolData + '"', 100);
+                await printLog('<span class="text-gray-500"><span class="zh-content">[系统] 正在连接 Vercel 云端 Python 后端...</span><span class="en-content">[System] Connecting to Vercel cloud backend...</span></span>', 300);
+
+                // ==========================================
+                // 【核心替换位置】：调用云端 Vercel Serverless API
+                // ==========================================
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        symbol: symbolData,
+                        timeframe: timeframeData
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API Request failed: ${response.status}`);
+                }
+
+                // 获取云端返回的真实 JSON 数据
+                const realData = await response.json();
+                
+                await printLog('<span class="text-green-400">✔ API 响应成功接收 (HTTP 200)。</span>', 200);
 
                 // Phase 1
-                await printLog('<br><span class="text-yellow-400"><span class="zh-content">==== [PHASE 1] ZK-POP 历史表现校验 ====</span><span class="en-content">==== [PHASE 1] ZK-POP Historical Validation ====</span></span>', 400);
-                await printLog('<span class="zh-content">正从链上注册表拉取模型 ZK-POP 证书...</span><span class="en-content">Fetching model ZK-POP certificate from on-chain registry...</span>', 800);
-                await printLog('<span class="text-green-400"><span class="zh-content">✔ 零知识证明已验证。模型 "quant_arb_042" 性能达标 (Sharpe > 2.5)。</span><span class="en-content">✔ Proof verified. Model "quant_arb_042" guaranteed Sharpe Ratio > 2.5.</span></span>', 1000);
+                await printLog('<br><span class="text-yellow-400"><span class="zh-content">==== [PHASE 1] ZK-POP 历史表现校验 ====</span><span class="en-content">==== [PHASE 1] ZK-POP Validation ====</span></span>', 400);
+                await printLog('<span class="text-green-400">✔ Proof verified. Model "quant_arb_042" guaranteed Sharpe Ratio > 2.5.</span>', 600);
                 
                 // Phase 2
-                await printLog('<br><span class="text-purple-400"><span class="zh-content">==== [PHASE 2] TEE (可信执行环境) 极速加载 ====</span><span class="en-content">==== [PHASE 2] TEE Secure Execution ====</span></span>', 600);
-                await printLog('<span class="zh-content">正在分配 AWS Nitro Enclave 硬件飞地...</span><span class="en-content">Allocating AWS Nitro Enclave...</span>', 500);
-                await printLog('<span class="zh-content">注入模型权重 (端到端加密)...</span><span class="en-content">Injecting model weights (Encrypted)...</span>', 600);
-                await printLog('<span class="zh-content">注入用户输入数据 (端到端加密)...</span><span class="en-content">Injecting user input data (Encrypted)...</span>', 600);
-                await printLog('<span class="text-blue-300"><span class="zh-content">⚙️ 正在 TEE 内部运行 PyTorch 推理...</span><span class="en-content">⚙️ Running PyTorch inference inside TEE...</span></span>', 1500);
-                await printLog('<span class="text-green-400"><span class="zh-content">✔ 推理完成。计算延迟: 42ms。</span><span class="en-content">✔ Inference complete. Latency: 42ms.</span></span>', 500);
-
+                await printLog('<br><span class="text-purple-400"><span class="zh-content">==== [PHASE 2] TEE (可信执行环境) 极速加载 ====</span><span class="en-content">==== [PHASE 2] TEE Secure Execution ====</span></span>', 400);
+                await printLog('<span class="text-blue-300">⚙️ Running PyTorch inference inside TEE...</span>', 500);
+                
                 // Phase 3
                 await printLog('<br><span class="text-blue-400"><span class="zh-content">==== [PHASE 3] 链上结算与智能合约审计 ====</span><span class="en-content">==== [PHASE 3] On-chain Settlement & Audit ====</span></span>', 400);
-                await printLog('<span class="zh-content">生成执行哈希，用于后置阶段性 ZK 抽查...</span><span class="en-content">Generating Execution Hash for Staged ZK Audit...</span>', 600);
-                await printLog('<span class="text-gray-500"><span class="zh-content">触发分润智能合约: 路由 $0.4875 至开发者钱包, $0.0125 至 Echo 国库。</span><span class="en-content">Triggering Smart Contract: Routing $0.4875 to Developer, $0.0125 to Echo.</span></span>', 600);
-                await printLog('<span class="text-gray-500"><span class="zh-content">链上 Tx Hash: 0x9f8c1a...e7b2 已排队等待 Rollup。</span><span class="en-content">Tx Hash: 0x9f8c1a...e7b2 queued for rollup validation.</span></span>', 500);
+                await printLog(`<span class="text-gray-500">Tx Hash: ${realData.security.zk_audit_tx} queued for rollup validation.</span>`, 500);
 
-                // Output Result
-                await printLog('<br><span class="text-white">--- API RESPONSE (JSON) ---</span>', 400);
-                const responseJSON = `
-<span class="text-green-300">{
-  "status": "success",
-  "data": {
-    "action": "LONG",
-    "asset": "${symbolData.split(',')[0]}",
-    "confidence_score": 0.89,
-    "target_price": 65400.00
-  },
-  "security": {
-    "execution_env": "AWS_NITRO_ENCLAVE",
-    "zk_audit_tx": "0x9f8c1a...e7b2"
-  }
-}</span>`;
-                await printLog(responseJSON, 800);
+                // 打印云端传回来的【真实的 JSON 数据】
+                await printLog('<br><span class="text-white">--- REAL API RESPONSE (JSON) ---</span>', 300);
+                
+                const formattedJSON = JSON.stringify(realData, null, 2)
+                    .replace(/\n/g, '<br>')
+                    .replace(/ /g, '&nbsp;');
+                
+                await printLog(`<span class="text-green-300">${formattedJSON}</span>`, 600);
                 
                 await printLog('<div class="blinking-cursor mt-2"><span class="text-blue-400">echo@network</span>:<span class="text-gray-200">~</span>$ </div>', 500);
 
+            } catch (error) {
+                // 错误处理：如果云端接口没配置好，会在这里提示
+                await printLog(`<br><span class="text-red-500">❌ Error: 云端后端连接失败。请检查 GitHub 上是否已正确创建 /api/predict.py 及其 requirements.txt。<br>详情: ${error.message}</span>`, 500);
             } finally {
-                // 恢复按钮状态（使用双语代码）
+                // 恢复按钮状态
                 btn.disabled = false;
                 btn.classList.replace('bg-blue-800', 'bg-blue-600');
                 btn.classList.add('hover:bg-blue-500');
