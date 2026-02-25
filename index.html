@@ -3,275 +3,115 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>Echo Protocol | The Computational Liquidity Layer</title>
-    <meta name="description" content="Echo turns high-value scientific algorithms into verifiable APIs that AI Agents can buy and use instantly.">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
-
-    <meta property="og:title" content="Echo Protocol | AI Agent 的计算流动性层">
-    <meta property="og:description" content="将沉默在 GitHub 与 arXiv 中的有效工程算法转化为可验证的 API。我们交易的是“可验证的计算结果”。">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://raw.githubusercontent.com/你的用户名/echo-protocol/main/og-image.jpg"> 
-    <meta name="twitter:card" content="summary_large_image">
-
     <script src="https://cdn.tailwindcss.com"></script>
-
     <style>
         .en-content { display: none; }
-        span.en-content { display: none; }
         body.lang-en .zh-content { display: none; }
-        body.lang-en span.zh-content { display: none; }
         body.lang-en .en-content { display: block; }
-        body.lang-en span.en-content { display: inline; }
-        body.lang-en flex.en-content { display: flex; }
-
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-            will-change: opacity, transform;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .gradient-text { background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .bg-grid { background-size: 40px 40px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px); }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed transition-colors duration-300">
-
-    <nav class="bg-white/90 backdrop-blur-md shadow-sm fixed w-full z-20 top-0">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-2xl font-bold text-blue-600 tracking-tight">ECHO Protocol</div>
-            <div class="flex items-center space-x-4 md:space-x-6 text-sm font-medium">
-                <a href="#problem" class="hidden md:inline hover:text-blue-500 transition-colors">
-                    <span class="zh-content">痛点</span>
-                    <span class="en-content">Problem</span>
-                </a>
-                <a href="#solution" class="hidden md:inline hover:text-blue-500 transition-colors">
-                    <span class="zh-content">工作流</span>
-                    <span class="en-content">Workflow</span>
-                </a>
-                
-                <a href="app.html" class="text-blue-600 hover:text-blue-800 font-bold transition-colors">
-                    <span class="zh-content">进入 App &rarr;</span>
-                    <span class="en-content">Launch App &rarr;</span>
-                </a>
-
-                <button id="lang-toggle" onclick="toggleLanguage()" class="ml-2 px-4 py-1.5 bg-gray-900 hover:bg-gray-700 text-white rounded-full font-bold transition-all shadow-md">
-                    EN
-                </button>
+<body class="bg-[#050508] text-gray-300 font-sans min-h-screen bg-grid transition-colors duration-300 relative">
+    
+    <nav class="border-b border-gray-800 bg-[#050508]/80 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></div>
+                <h1 class="text-xl font-bold text-white tracking-widest">ECHO<span class="text-blue-500">PROTOCOL</span></h1>
             </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#developers" class="hover:text-white transition-colors">Developers (SDK)</a>
+                <a href="#agents" class="hover:text-white transition-colors">AI Agents (Hub)</a>
+                <a href="app.html" class="text-blue-400 hover:text-blue-300">Launch DApp &rarr;</a>
+            </div>
+            <button onclick="document.body.classList.toggle('lang-en')" class="px-3 py-1 border border-gray-600 rounded text-xs font-bold hover:bg-gray-800">EN / 中</button>
         </div>
     </nav>
 
-    <header class="pt-40 pb-24 bg-gradient-to-br from-blue-50 via-white to-indigo-50 fade-in">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 tracking-tight leading-tight">
-                <span class="zh-content">计算流动性层 <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">AI Agent 的 GitHub 与 Kaggle</span></span>
-                <span class="en-content">The Computational Liquidity Layer <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">GitHub & Kaggle for AI Agents</span></span>
-            </h1>
-            <p class="text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-                <span class="zh-content">将沉默在 GitHub 与 arXiv 中的有效工程算法转化为可验证的 API。我们不仅仅交易代码，我们交易的是“可验证的计算结果”。</span>
-                <span class="en-content">Echo turns high-value scientific algorithms into verifiable APIs that AI Agents can buy and use instantly. We trade "verifiable compute results".</span>
+    <main class="max-w-7xl mx-auto px-6 pt-20 pb-24">
+        <div class="text-center max-w-4xl mx-auto mb-20">
+            <div class="inline-block px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-bold tracking-wide mb-6">
+                <span class="zh-content">AI Agent 经济的“台积电”与“纳斯达克”</span>
+                <span class="en-content">The TSMC & Nasdaq of the Agent Economy</span>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight mb-8 leading-tight">
+                <span class="zh-content">计算流动性层<br><span class="bg-gradient-to-r from-blue-500 to-purple-500 gradient-text">专为 AI Agent 打造</span></span>
+                <span class="en-content">The Computational<br><span class="bg-gradient-to-r from-blue-500 to-purple-500 gradient-text">Liquidity Layer for AI Agents</span></span>
+            </h2>
+            <p class="text-lg md:text-xl text-gray-400 mb-10 leading-relaxed">
+                <span class="zh-content">采用 “TEE 极速执行 + 异步 ZK 验证 + 智能合约结算” 实用去中心化架构。<br>解决高价值金融与科学算法在 Agent 经济中的流动性危机。</span>
+                <span class="en-content">Hyperliquid architecture: TEE execution + Async ZK-POP + Smart Settlements.<br>Solving the liquidity crisis of high-value algorithms in the Agent Economy.</span>
             </p>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <a href="app.html" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-full font-bold hover:bg-blue-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span class="zh-content">输入计算需求</span>
-                    <span class="en-content">Input Compute Request</span>
+            <div class="flex justify-center space-x-4">
+                <a href="app.html" class="bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-8 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all">
+                    <span class="zh-content">启动 Agent 控制台</span><span class="en-content">Launch Agent Console</span>
                 </a>
-                <a href="app.html" class="w-full sm:w-auto bg-white text-blue-600 border-2 border-blue-600 px-8 py-4 rounded-full font-bold hover:bg-blue-50 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    <span class="zh-content">上传至 ZK 容器</span>
-                    <span class="en-content">Upload to ZK Container</span>
+                <a href="upload.html" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-lg border border-gray-700 transition-all">
+                    <span class="zh-content">开发者接入 (SDK)</span><span class="en-content">Developer SDK</span>
                 </a>
             </div>
         </div>
-    </header>
 
-    <section id="problem" class="py-24 bg-white fade-in">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16">
-                <span class="zh-content">人类注意力的极限 与 信任的鸿沟</span>
-                <span class="en-content">The Limits of Human Attention & The Trust Gap</span>
-            </h2>
-            <div class="grid md:grid-cols-2 gap-12">
-                <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <h3 class="text-xl font-bold mb-6 text-red-500 flex items-center">
-                        <span class="mr-2">⚠️</span>
-                        <span class="zh-content">现状痛点</span>
-                        <span class="en-content">The Problem</span>
-                    </h3>
-                    <div class="zh-content text-gray-600 space-y-4">
-                        <p>大量真实的工程算法能够解决实际问题，但由于人类和企业的注意力有限，它们产生的商业价值不足以吸引企业投入精力去集成。</p>
-                        <p>此外，买方不愿意购买“黑盒”API，担心结果伪造；卖方不愿共享源代码，担心知识产权被窃取。</p>
-                    </div>
-                    <div class="en-content text-gray-600 space-y-4">
-                        <p>Top-tier algorithms are trapped in academic PDFs or corporate servers. The commercial value may not attract corporate attention due to limited human bandwidth.</p>
-                        <p>Buyers won't buy "black box" APIs fearing fabricated results. Sellers won't share source code fearing their IP will be stolen.</p>
-                    </div>
-                </div>
-                <div class="bg-white p-10 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <h3 class="text-xl font-bold mb-6 text-green-500 flex items-center">
-                        <span class="mr-2">💡</span>
-                        <span class="zh-content">AI时代的机遇</span>
-                        <span class="en-content">The AI Era Opportunity</span>
-                    </h3>
-                    <div class="zh-content text-gray-600 space-y-4">
-                        <p>在 AI Agent 时代，Agent 拥有无限的精力去发现、调用并整合这些算法碎片。我们将这些长尾算法上传到 ECHO，供 Agent 无缝调用。</p>
-                        <p>结合成熟的区块链与 ZK（零知识证明）技术，彻底解决了开源环境下的信任建立与版权保护问题。</p>
-                    </div>
-                    <div class="en-content text-gray-600 space-y-4">
-                        <p>AI Agents possess limitless energy to discover and call upon these fragmented algorithms. Echo allows these algorithms to be uploaded for seamless Agent invocation.</p>
-                        <p>Zero-Knowledge (ZK) technology completely resolves the trust and copyright issues in open-source environments.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="solution" class="py-24 bg-gray-900 text-white fade-in">
-        <div class="max-w-6xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-6">
-                <span class="zh-content">可验证计算市场</span>
-                <span class="en-content">A Marketplace for "Verifiable Compute"</span>
-            </h2>
-            <p class="text-center text-gray-400 max-w-2xl mx-auto mb-16 text-lg">
-                <span class="zh-content">通过零知识性能证明（ZK-POP），我们用纯粹的数学填补信任鸿沟。</span>
-                <span class="en-content">We use pure math to bridge the trust gap via Zero-Knowledge Performance Proofs (ZK-POP).</span>
-            </p>
-
-            <div class="max-w-5xl mx-auto mb-16 bg-white p-4 md:p-8 rounded-2xl shadow-2xl transform transition hover:scale-[1.01] duration-300">
-                <img src="workflow.jpg" alt="Echo Protocol System Workflow" class="w-full h-auto rounded-lg">
-            </div>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mb-16 mt-8">
-                <a href="app.html" class="bg-blue-600 text-white px-6 py-3 rounded-full font-bold hover:bg-blue-700 transition-colors flex items-center">
-                    <span class="zh-content">作为 Agent 发起请求</span>
-                    <span class="en-content">Request as an Agent</span>
-                </a>
-                <span class="text-gray-500 hidden sm:inline">或</span>
-                <a href="app.html" class="bg-gray-800 text-gray-300 border border-gray-600 px-6 py-3 rounded-full font-bold hover:bg-gray-700 hover:text-white transition-colors flex items-center">
-                    <span class="zh-content">作为开发者部署算法</span>
-                    <span class="en-content">Deploy Algorithm as Developer</span>
-                </a>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 text-center relative">
-                <div class="hidden md:block absolute top-1/2 left-1/6 right-1/6 h-0.5 bg-gray-700 -z-10 transform -translate-y-1/2"></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm hover:border-blue-500/50 transition-colors">
+                <h3 class="text-2xl font-bold text-white mb-2"><span class="zh-content">供给端：算法变现的 Stripe</span><span class="en-content">Supply: The Stripe for Algorithms</span></h3>
+                <p class="text-sm text-gray-400 mb-6"><span class="zh-content">7 行代码，屏蔽所有底层密码学与 TEE 封装，实时获得 97.5% 调用分润。</span><span class="en-content">7 lines of code. Abstract away TEE & ZK. Earn 97.5% royalty instantly.</span></p>
                 
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
-                    <div class="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(59,130,246,0.5)]">1</div>
-                    <h3 class="text-xl font-bold mb-3">
-                        <span class="zh-content">输入 (Input)</span>
-                        <span class="en-content">Input</span>
-                    </h3>
-                    <p class="text-gray-400 text-sm">
-                        <span class="zh-content">Agent 发现缺失技能，发送原始数据请求给 API。</span>
-                        <span class="en-content">Agent detects missing skill and sends raw data request.</span>
-                    </p>
+                <div class="bg-[#0a0a0f] rounded-lg p-5 border border-gray-800 font-mono text-xs text-gray-300 leading-relaxed shadow-inner">
+                    <span class="text-pink-500">import</span> echo<br>
+                    <span class="text-pink-500">from</span> echo.envs <span class="text-pink-500">import</span> AWS_Nitro<br>
+                    <span class="text-pink-500">from</span> echo.metrics <span class="text-pink-500">import</span> ZK_POP<br><br>
+                    <span class="text-gray-500"># 链接钱包，准备接收 97.5% 结算</span><br>
+                    echo.init(wallet=<span class="text-green-400">"0x7F2a...4A92"</span>)<br><br>
+                    <span class="text-yellow-400">@echo.deploy</span>(<br>
+                    &nbsp;&nbsp;env=AWS_Nitro, <span class="text-gray-500"># TEE 硬件隔离</span><br>
+                    &nbsp;&nbsp;zk_proof=ZK_POP(sharpe_ratio=<span class="text-green-400">">2.5"</span>),<br>
+                    &nbsp;&nbsp;price_per_call=<span class="text-purple-400">0.50</span><br>
+                    )<br>
+                    <span class="text-blue-400">def</span> <span class="text-yellow-200">quant_arb_042</span>(market_data):<br>
+                    &nbsp;&nbsp;<span class="text-pink-500">return</span> model.predict(market_data)
                 </div>
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
-                    <div class="w-16 h-16 bg-indigo-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(99,102,241,0.5)]">2</div>
-                    <h3 class="text-xl font-bold mb-3">
-                        <span class="zh-content">处理 (Process)</span>
-                        <span class="en-content">Process</span>
-                    </h3>
-                    <p class="text-gray-400 text-sm">
-                        <span class="zh-content">调用长尾算法并在隔离加密环境中执行。</span>
-                        <span class="en-content">Calls long-tail algorithm & executes in isolated environment.</span>
-                    </p>
+            </div>
+
+            <div class="bg-gray-900/50 border border-gray-800 rounded-2xl p-8 backdrop-blur-sm hover:border-purple-500/50 transition-colors">
+                <h3 class="text-2xl font-bold text-white mb-2"><span class="zh-content">需求端：Agent 的 Kaggle 市场</span><span class="en-content">Demand: Kaggle Hub for Agents</span></h3>
+                <p class="text-sm text-gray-400 mb-6"><span class="zh-content">通过 ZK-POP 认证的硬核性能排行榜，Agent 按需购买，无需信任盲盒。</span><span class="en-content">ZK-POP verified leaderboards. Agents buy execution, not trust.</span></p>
+                
+                <div class="bg-[#0a0a0f] rounded-lg border border-gray-800 overflow-hidden shadow-inner">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-gray-800 text-gray-400">
+                            <tr>
+                                <th class="px-4 py-3">Algorithm</th>
+                                <th class="px-4 py-3">ZK-POP Metric</th>
+                                <th class="px-4 py-3">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-800 text-gray-300">
+                            <tr class="hover:bg-gray-800/50">
+                                <td class="px-4 py-3 font-mono text-blue-400">quant_arb_042</td>
+                                <td class="px-4 py-3 text-green-400">Sharpe > 2.84 ✔</td>
+                                <td class="px-4 py-3 font-mono">$0.50</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/50">
+                                <td class="px-4 py-3 font-mono text-purple-400">bio_dock_v3</td>
+                                <td class="px-4 py-3 text-green-400">Accuracy > 94% ✔</td>
+                                <td class="px-4 py-3 font-mono">$1.20</td>
+                            </tr>
+                            <tr class="hover:bg-gray-800/50">
+                                <td class="px-4 py-3 font-mono text-blue-400">eth_grid_opt</td>
+                                <td class="px-4 py-3 text-green-400">Win Rate > 72% ✔</td>
+                                <td class="px-4 py-3 font-mono">$0.15</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="p-6 bg-gray-800 rounded-2xl shadow-lg border border-gray-700 relative z-10">
-                    <div class="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-[0_0_20px_rgba(168,85,247,0.5)]">3</div>
-                    <h3 class="text-xl font-bold mb-3">
-                        <span class="zh-content">结算 (Settlement)</span>
-                        <span class="en-content">Settlement</span>
-                    </h3>
-                    <p class="text-gray-400 text-sm">
-                        <span class="zh-content">验证 ZK 证明，执行智能合约，97.5% 收益分给开发者。</span>
-                        <span class="en-content">Verifies ZKP, executes smart contract, 97.5% to developer.</span>
-                    </p>
+                <div class="mt-6">
+                    <a href="market.html" class="text-sm text-blue-400 hover:text-blue-300">Explore Echo Hub &rarr;</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <section id="business" class="py-24 bg-gray-50 fade-in">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-16">
-                <span class="zh-content">商业模式：对“计算价值”征税</span>
-                <span class="en-content">Business Model: Taxing the "Value of Compute"</span>
-            </h2>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-white p-10 shadow-sm hover:shadow-md transition-shadow rounded-2xl border border-gray-100">
-                    <div class="text-4xl mb-4">💳</div>
-                    <h3 class="text-xl font-bold mb-4 text-blue-600">
-                        <span class="zh-content">交易费 (Transaction Fee)</span>
-                        <span class="en-content">Transaction Fee</span>
-                    </h3>
-                    <p class="text-gray-600">
-                        <span class="zh-content">我们从 Agent 与模型之间的每一次 API 调用中提取 2.5% 的费用。</span>
-                        <span class="en-content">We take a 2.5% cut from every API call between Agents and models.</span>
-                    </p>
-                </div>
-                <div class="bg-white p-10 shadow-sm hover:shadow-md transition-shadow rounded-2xl border border-gray-100">
-                    <div class="text-4xl mb-4">📈</div>
-                    <h3 class="text-xl font-bold mb-4 text-indigo-600">
-                        <span class="zh-content">计算溢价 (Compute Premium)</span>
-                        <span class="en-content">Compute Premium</span>
-                    </h3>
-                    <p class="text-gray-600">
-                        <span class="zh-content">为稀缺、高性能的科学算法提供动态定价和竞价机制。</span>
-                        <span class="en-content">Dynamic pricing (bidding mechanisms) for scarce, high-performance algorithms.</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-gray-950 text-gray-500 py-12 text-center">
-        <p class="text-lg text-gray-400 mb-4 font-medium">
-            <span class="zh-content">在过去，软件吞噬了世界。在未来，软件将购买软件。</span>
-            <span class="en-content">In the past, software ate the world. In the future, software will buy software.</span>
-        </p>
-        <p class="text-sm">&copy; 2026 Echo Protocol. All rights reserved.</p>
-    </footer>
-
-    <script>
-        function toggleLanguage() {
-            const body = document.body;
-            const btn = document.getElementById('lang-toggle');
-            if (body.classList.contains('lang-en')) {
-                body.classList.remove('lang-en');
-                btn.innerText = 'EN'; 
-            } else {
-                body.classList.add('lang-en');
-                btn.innerText = '中文'; 
-            }
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const observerOptions = {
-                threshold: 0.15,
-                rootMargin: "0px 0px -50px 0px"
-            };
-
-            const observer = new IntersectionObserver(function(entries, observer) {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, observerOptions);
-
-            const elementsToFadeIn = document.querySelectorAll('.fade-in');
-            elementsToFadeIn.forEach(el => {
-                observer.observe(el);
-            });
-        });
-    </script>
+    </main>
 </body>
 </html>
